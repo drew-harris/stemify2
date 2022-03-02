@@ -23,7 +23,6 @@ model Song {
   download   Download?
   ticket     Ticket?
   metadata   Metadata?
-  kanoKey    String?
   approved   Boolean
   youtubeUrl String
   downloads  Int       @default(0)
