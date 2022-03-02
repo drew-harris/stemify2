@@ -65,8 +65,7 @@ model Download {
 }
 
 model Spotify {
-  id      String    @id @default(cuid())
+  id      String   @id @default(cuid())
   token   String
-  refresh String
-  expires DateTime?
+  expires DateTime
 }
