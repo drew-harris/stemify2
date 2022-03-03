@@ -24,6 +24,7 @@ model Song {
   ticket     Ticket?
   metadata   Metadata?
   approved   Boolean
+  manual     Boolean
   youtubeUrl String
   downloads  Int       @default(0)
   createdAt  DateTime  @default(now())
