@@ -27,7 +27,7 @@ export default async function handler(
           where: { id: ticket.id },
           data: { started: new Date() },
         });
-        const song = prisma.song.findFirst({
+        const song = await prisma.song.findFirst({
           where: { id: ticket.songId },
           select: {
             title: true,
