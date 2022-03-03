@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { getPrismaPool } from "./prismaPool";
+const prisma = getPrismaPool();
 
 type Song = {
   title: string;
