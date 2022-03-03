@@ -11,40 +11,26 @@ export default async function handler(
     res.status(405).json({ msg: "Method not allowed" });
   } else {
     try {
-      let ticket = null;
       const prisma = getPrismaPool();
       // Find where started more than 20 minutes ago
-      ticket = await prisma.ticket.findFirst({
+      const oldPending = await prisma.ticket.findFirst({
         where: {
           complete: false,
           started: { lt: new Date(Date.now() - 2 * 60 * 1000) },
         },
       });
-      if (ticket) {
-        console.log("Found old");
-        // Include parent songId
+      if (oldPending) {
         await prisma.ticket.update({
-          where: { id: ticket.id },
+          where: { id: oldPending.id },
           data: { started: new Date() },
         });
-        const song = prisma.song.findFirst({
-          where: { id: ticket.songId },
-          select: {
-            title: true,
-            artist: true,
-            bpm: true,
-            innerColor: true,
-            outerColor: true,
-          },
-        });
         res.json({
-          ticket: ticket,
-          song: song,
+          ticket: oldPending,
         });
         return;
       }
 
-      ticket = await prisma.ticket.findFirst({
+      const ticket = await prisma.ticket.findFirst({
         where: { complete: false, started: null },
         orderBy: { createdAt: "desc" },
       });
@@ -54,21 +40,13 @@ export default async function handler(
           where: { id: ticket.id },
           data: { started: new Date() },
         });
-        const song = await prisma.song.findFirst({
-          where: { id: ticket.songId },
-          select: {
-            title: true,
-            artist: true,
-            bpm: true,
-            innerColor: true,
-            outerColor: true,
-          },
+        res.json({
+          updatedTicket,
         });
-        res.json({ ticket: updatedTicket, song });
         return;
       }
 
-      res.status(404).json({ ticket: null, song: null });
+      res.status(404).json({ ticket: null });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
