@@ -18,13 +18,13 @@ model Song {
   artist     String
   innerColor String
   outerColor String
-  bpm        Int       @default(120)
+  bpm        Float     @default(120)
   complete   Boolean   @default(false)
   download   Download?
   ticket     Ticket?
   metadata   Metadata?
-  approved   Boolean
-  manual     Boolean
+  approved   Boolean   @default(false)
+  automatic  Boolean   @default(true)
   youtubeUrl String
   downloads  Int       @default(0)
   createdAt  DateTime  @default(now())
@@ -32,7 +32,7 @@ model Song {
 
 model Metadata {
   id          String  @id @default(cuid())
-  song        Song    @relation(fields: [songId], references: [id])
+  song        Song    @relation(fields: [songId], references: [id], onDelete: Cascade)
   songId      String
   spotTrackId String
   spotAlbumId String
@@ -46,7 +46,7 @@ model Metadata {
 
 model Ticket {
   id        String   @id @default(cuid())
-  song      Song     @relation(fields: [songId], references: [id])
+  song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
   songId    String
   slug      String   @unique
   createdAt DateTime @default(now())
@@ -56,7 +56,7 @@ model Ticket {
 
 model Download {
   id      String @id @default(cuid())
-  song    Song   @relation(fields: [songId], references: [id])
+  song    Song   @relation(fields: [songId], references: [id], onDelete: Cascade)
   songId  String
   kanoKey String
   drums   String
