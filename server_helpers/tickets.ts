@@ -1,5 +1,4 @@
 import { getPrismaPool } from "./prismaPool";
-import slugify from "slugify";
 
 export async function createSong(url: string, data: any, automatic: boolean) {
   const prisma = getPrismaPool();
