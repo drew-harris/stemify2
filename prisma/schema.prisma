@@ -3,7 +3,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  previewFeatures = ["referentialIntegrity", "fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -28,6 +28,10 @@ model Song {
   youtubeUrl String
   downloads  Int       @default(0)
   createdAt  DateTime  @default(now())
+
+  @@fulltext([title, artist])
+  @@fulltext([title])
+  @@fulltext([artist])
 }
 
 model Metadata {
