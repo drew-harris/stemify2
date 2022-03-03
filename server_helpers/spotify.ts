@@ -74,12 +74,16 @@ const getNewToken = async () => {
   }
 };
 
-export async function getSongData(title: string, filter: boolean) {
+export async function getSongData(
+  title: string,
+  filter: boolean,
+  limit: number = 1
+) {
   let token = await getToken();
   const paramsObj = {
     q: filter ? getSongName(title) : title,
     type: "track",
-    limit: "1",
+    limit: limit.toString(),
     market: "US",
   };
   console.log("Searching Spotify for: " + title);
@@ -104,27 +108,14 @@ export async function getSongData(title: string, filter: boolean) {
       throw new Error("Unable to get song data");
     }
 
-    const trackData = data.tracks.items[0];
+    const songs: Song[] = [];
+    for (let i = 0; i < data.tracks.items.length; i++) {
+      const trackToAdd: Song = makeSongFromSpotify(data.tracks.items[i]);
+      trackToAdd.bpm = await getBpm(trackToAdd.metadata.spotTrackId);
+      songs.push(trackToAdd);
+    }
 
-    const betterOutput: Song = {
-      title: trackData.name,
-      artist: trackData.artists[0].name,
-      metadata: {
-        spotTrackId: trackData.id,
-        trackNum: trackData.track_number,
-        spotAlbumId: trackData.album.id,
-        albumTitle: trackData.album.name,
-        albumArt: trackData.album.images[1]?.url,
-        artist: trackData.artists[0].name,
-        artistId: trackData.artists[0].id,
-        previewUrl: trackData.preview_url || null,
-      },
-      bpm: null,
-    };
-
-    betterOutput.bpm = await getBpm(betterOutput.metadata.spotTrackId);
-    console.log(betterOutput);
-    return betterOutput;
+    return songs;
   } catch (err) {
     console.log(err);
     throw err;
@@ -192,4 +183,23 @@ function getSongName(filename: string) {
   }
   console.log(songName);
   return songName;
+}
+
+function makeSongFromSpotify(track: any) {
+  const betterOutput: Song = {
+    title: track.name,
+    artist: track.artists[0].name,
+    metadata: {
+      spotTrackId: track.id,
+      trackNum: track.track_number,
+      spotAlbumId: track.album.id,
+      albumTitle: track.album.name,
+      albumArt: track.album.images[1]?.url,
+      artist: track.artists[0].name,
+      artistId: track.artists[0].id,
+      previewUrl: track.preview_url || null,
+    },
+    bpm: null,
+  };
+  return betterOutput;
 }

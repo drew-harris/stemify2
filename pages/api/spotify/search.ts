@@ -26,13 +26,15 @@ export default async function handler(
     res.status(405).json({ msg: "Method not allowed" });
   } else {
     const query = req.body.query;
+    const limit = req.body?.limit || 1;
     if (!query) {
       res.status(400).json({ error: "No query provided" });
       return;
     }
+
     const useFilter = req.body?.filter || false;
 
-    const metadata: Metadata = await getSongData(query, useFilter);
+    const metadata: Metadata[] = await getSongData(query, useFilter, limit);
     res.json(metadata);
   }
 }
