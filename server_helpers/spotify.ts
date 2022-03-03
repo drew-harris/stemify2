@@ -141,7 +141,7 @@ async function getBpm(spotifyId: string) {
   return data.tempo;
 }
 
-export async function getTrackNum(id: string) {
+async function getTrackNum(id: string) {
   const token = await getToken();
   const result = await fetch(`https://api.spotify.com/v1/tracks/${id}`, {
     method: "GET",
