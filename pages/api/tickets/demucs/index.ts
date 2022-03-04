@@ -28,8 +28,9 @@ export default async function handler(
           data: { started: new Date() },
         });
         const song = await prisma.song.findFirst({
-          where: { id: ticket.songId },
+          where: { id: ticket.songId, complete: false },
           select: {
+            id: true,
             title: true,
             artist: true,
             bpm: true,
@@ -37,6 +38,10 @@ export default async function handler(
             outerColor: true,
           },
         });
+        if (!song) {
+          res.status(404).json({ error: "No song found" });
+          return;
+        }
         res.json({
           ticket: ticket,
           song: song,
@@ -57,6 +62,7 @@ export default async function handler(
         const song = await prisma.song.findFirst({
           where: { id: ticket.songId },
           select: {
+            id: true,
             title: true,
             artist: true,
             bpm: true,
