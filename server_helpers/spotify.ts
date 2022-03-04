@@ -194,7 +194,7 @@ function makeSongFromSpotify(track: any) {
       trackNum: track.track_number,
       spotAlbumId: track.album.id,
       albumTitle: track.album.name,
-      albumArt: track.album.images[1]?.url,
+      albumArt: track.album.images[0]?.url,
       artist: track.artists[0].name,
       artistId: track.artists[0].id,
       previewUrl: track.preview_url || null,
