@@ -36,7 +36,7 @@ export default function Home({ songs }: any) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req, res }: any) {
   const prisma = getPrismaPool();
   const songs = await prisma.song.findMany({
     where: {
@@ -52,6 +52,10 @@ export async function getServerSideProps() {
   });
   console.log(songs);
 
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=9000, stale-while-revalidate=59"
+  );
   return {
     props: {
       songs,
