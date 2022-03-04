@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client"
 import { useEffect } from "react"
 import { getPrismaPool } from "../../server_helpers/prismaPool"
 import Image from "next/image"
@@ -11,7 +10,7 @@ export default function Home({songs}: any) {
     <div key={song.id}>
       <h2>{song.title}</h2>
       <pre>{JSON.stringify(song, null, 2)}</pre>
-      <Image src={song.metadata.albumArt} width={600} height={600} alt="Album Art" />
+      <Image src={song.metadata.albumArt} width={100} height={100} alt="Album Art" />
     </div>
   ))
   return (

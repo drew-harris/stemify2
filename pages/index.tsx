@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
   return (
-    <div>Stemify 2</div>
+    <div className="text-3xl font-bold underline">Stemify 2</div>
   )
 }
 
