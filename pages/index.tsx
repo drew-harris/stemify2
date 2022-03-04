@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
   return (
-    <div className="text-3xl font-bold underline">Stemify 2</div>
+    <div className="mx-auto text-center text-[28px] mt-32">Stemify 2</div>
   )
 }
 

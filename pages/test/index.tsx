@@ -13,6 +13,7 @@ export default function Home({songs}: any) {
       <Image src={song.metadata.albumArt} width={100} height={100} alt="Album Art" />
     </div>
   ))
+
   return (
     <>
     <div>Stemify 2 Soonr</div>
@@ -21,7 +22,7 @@ export default function Home({songs}: any) {
   )
 }
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps() {
   const prisma = getPrismaPool();
   const songs = await prisma.song.findMany({
     where: {
