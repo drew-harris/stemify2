@@ -11,7 +11,7 @@ function Song({ data }: any) {
         </div>
         <div>
           <div className="font-semibold">{data.title}</div>
-          <div className="font-semibold">{data.metadata.artist}</div>
+          <div className="font-medium">{data.metadata.artist}</div>
         </div>
       </div>
       <button className="rounded bg-tan-400 text-white p-1 px-2 ml-6 font-semibold">
@@ -30,7 +30,7 @@ export default function Home({ songs }: any) {
   ));
 
   return (
-    <div className="p-32 flex justify-center flex-wrap gap-10">
+    <div className="p-32 flex justify-center flex-wrap gap-8">
       {songComponents}
     </div>
   );
