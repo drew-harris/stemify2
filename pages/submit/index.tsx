@@ -6,43 +6,7 @@ import { PropagateLoader } from "react-spinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-
-function Choice({ songData, setColors }: any) {
-  const { data, loading, error } = usePalette(songData.metadata.albumArt);
-  useEffect(() => {
-    if (data) {
-      setColors([data.vibrant, data.darkVibrant]);
-    }
-  }, [data, setColors]);
-  return (
-    <div className="flex flex-row items-center justify-between p-4 overflow-hidden text-lg text-left transition-shadow bg-white shadow-sm text-tan-700 sm:4 rounded-xl hover:shadow-md">
-      <div className="flex flex-row items-center ">
-        <div className="relative w-10 h-10 mr-2 overflow-hidden rounded-lg sm:w-28 sm:h-28 shrink-0 sm:mr-4">
-          <Image
-            layout="fill"
-            src={songData.metadata.albumArt}
-            alt={"Album Art for " + songData.metadata.albumTitle}
-          />
-        </div>
-        <div className="" style={{ color: data.darkMuted }}>
-          <div className="font-semibold">{songData.title}</div>
-          <div className="font-medium">{songData.metadata.artist}</div>
-          <div className="font-normal ">{songData.metadata.albumTitle}</div>
-          <div className="flex gap-4 mt-2">
-            <div
-              className="w-4 h-4 rounded-full"
-              style={{ backgroundColor: data.vibrant }}
-            ></div>
-            <div
-              className="w-4 h-4 rounded-full"
-              style={{ backgroundColor: data.darkVibrant }}
-            ></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+import BigSong from "../../components/BigSong";
 
 export default function SubmitPage() {
   const [inputLink, setInputLink] = useState("");
@@ -132,10 +96,11 @@ export default function SubmitPage() {
         {choices.length > 0 ? (
           <div className="flex flex-row items-center justify-center gap-4 pt-8 mx-auto mb-10">
             {choices.map((choice: any) => (
-              <Choice
+              <BigSong
                 songData={choice}
-                key={choice.metadata.spotTrackId}
                 setColors={setColors}
+                width="auto"
+                key={choice.metadata.spotTrackId}
               />
             ))}
           </div>
