@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { queueContext } from "./layouts/LibraryLayout";
 export default function Song({ data, limit }: any) {
-  const { queueSongs, setQueueSongs } = useContext(queueContext);
+  const { queueSongs, setQueueSongs, isUploading } = useContext(queueContext);
   const [added, setAdded] = useState(queueSongs.includes(data));
 
   useEffect(() => {
@@ -33,14 +33,16 @@ export default function Song({ data, limit }: any) {
           <div className="font-medium">{data.metadata.artist}</div>
         </div>
       </div>
-      <button
-        onClick={add}
-        className={`rounded ${
-          added ? "bg-tan-500" : "bg-tan-400"
-        }  text-white p-1 px-2 sm:block hidden ml-2 font-semibold hover:shadow-md hover:scale-105 transition-transform `}
-      >
-        {added ? "ADDED" : "ADD"}
-      </button>
+      {!isUploading ? (
+        <button
+          onClick={add}
+          className={`rounded ${
+            added ? "bg-tan-500" : "bg-tan-400"
+          }  text-white p-1 px-2 sm:block hidden ml-2 font-semibold hover:shadow-md hover:scale-105 transition-transform `}
+        >
+          {added ? "ADDED" : "ADD"}
+        </button>
+      ) : null}
     </div>
   );
 }

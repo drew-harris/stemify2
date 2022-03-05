@@ -5,13 +5,18 @@ import LibraryQueue from "../LibraryQueue";
 export const queueContext = createContext<any>({
   queueSongs: [],
   setQueueSongs: () => {},
+  setIsUploading: () => {},
+  isUploading: false,
 });
 
 export default function Layout({ children }: any) {
   const [queueSongs, setQueueSongs] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
   const value = {
     queueSongs,
     setQueueSongs,
+    isUploading,
+    setIsUploading,
   };
   return (
     <div>
