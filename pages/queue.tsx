@@ -18,33 +18,24 @@ export default function QueuePage({ songs }: any) {
 }
 
 export async function getStaticProps({ req, res }: any) {
-  try {
-    const prisma = await getPrismaPool();
-    const songs = await prisma.song.findMany({
-      where: {
-        complete: false,
-      },
-      select: {
-        title: true,
-        metadata: true,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-    });
+  const prisma = await getPrismaPool();
+  const songs = await prisma.song.findMany({
+    where: {
+      complete: false,
+    },
+    select: {
+      title: true,
+      metadata: true,
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
 
-    return {
-      props: {
-        songs,
-      },
-      revalidate: 100,
-    };
-  } catch (error) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+  return {
+    props: {
+      songs,
+    },
+    revalidate: 100,
+  };
 }
