@@ -9,11 +9,11 @@ function Song({ data, limit }: any) {
   };
   return (
     <div
-      className="p-4 w-80 overflow-hidden bg-white rounded-xl flex hover:shadow-md 
-    transition-shadow shadow-sm flex-row justify-between gap-3 items-center"
+      className="p-2 sm:4 w-80 overflow-hidden bg-white rounded-xl flex hover:shadow-md 
+    transition-shadow shadow-sm flex-row justify-between items-center"
     >
-      <div className="flex truncate text-ellipsis flex-row ">
-        <div className="w-12 h-12 shrink-0 overflow-hidden rounded-2xl relative mr-4">
+      <div className="flex truncate text-ellipsis flex-row items-center ">
+        <div className="sm:w-12 sm:h-12 w-8 h-8 shrink-0 overflow-hidden rounded-2xl relative mr-2 sm:mr-4">
           <Image
             layout="fill"
             src={data.metadata.albumArt}
@@ -50,7 +50,8 @@ export default function Home({ songs }: any) {
   return (
     <>
       <div className="text-2xl mx-auto mt-9 text-center font-bold">Library</div>
-      <div className="p-9 flex flex-wrap justify-evenly gap-2 gap-y-8">
+
+      <div className="sm:p-9 p-3 flex flex-wrap justify-center gap-3 items-center ">
         {songComponents}
       </div>
     </>
