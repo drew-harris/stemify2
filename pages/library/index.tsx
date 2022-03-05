@@ -34,7 +34,7 @@ Home.getLayout = function getLayout(page: any) {
   );
 };
 
-export async function getServerSideProps({ req, res }: any) {
+export async function getStaticProps({ req, res }: any) {
   const prisma = getPrismaPool();
   const songs = await prisma.song.findMany({
     where: {
@@ -50,13 +50,10 @@ export async function getServerSideProps({ req, res }: any) {
     },
   });
 
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=900, stale-while-revalidate=59"
-  );
   return {
     props: {
       songs,
     },
+    revalidate: 100,
   };
 }

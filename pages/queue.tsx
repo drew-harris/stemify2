@@ -17,7 +17,7 @@ export default function QueuePage({ songs }: any) {
   );
 }
 
-export async function getServerSideProps({ req, res }: any) {
+export async function getStaticProps({ req, res }: any) {
   try {
     const prisma = await getPrismaPool();
     const songs = await prisma.song.findMany({
@@ -33,14 +33,11 @@ export async function getServerSideProps({ req, res }: any) {
       },
     });
 
-    res.setHeader(
-      "Cache-Control",
-      "public, s-maxage=90, stale-while-revalidate=59"
-    );
     return {
       props: {
         songs,
       },
+      revalidate: 100,
     };
   } catch (error) {
     return {
