@@ -100,6 +100,7 @@ export async function getSongData(
     );
     if (!result.ok) {
       // TODO:
+      console.error(result);
       throw new Error("Unable to search Spotify for song");
     }
     data = await result.json();

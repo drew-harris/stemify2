@@ -8,19 +8,16 @@ function Song({ data, limit }: any) {
     setAdded(!added);
   };
   return (
-    <div
-      className="p-2 sm:4 w-80 overflow-hidden bg-white rounded-xl flex hover:shadow-md 
-    transition-shadow shadow-sm flex-row justify-between items-center"
-    >
-      <div className="flex truncate text-ellipsis flex-row items-center ">
-        <div className="sm:w-12 sm:h-12 w-8 h-8 shrink-0 overflow-hidden rounded-2xl relative mr-2 sm:mr-4">
+    <div className="flex flex-row items-center justify-between p-2 overflow-hidden transition-shadow bg-white shadow-sm sm:4 w-80 rounded-xl hover:shadow-md">
+      <div className="flex flex-row items-center truncate text-ellipsis ">
+        <div className="relative w-8 h-8 mr-2 overflow-hidden sm:w-12 sm:h-12 shrink-0 rounded-2xl sm:mr-4">
           <Image
             layout="fill"
             src={data.metadata.albumArt}
             alt={"Album Art for " + data.metadata.albumTitle}
           />
         </div>
-        <div className="shrink truncate">
+        <div className="text-black truncate shrink">
           <div className="font-semibold truncate text-ellipsis">
             {data.title}
           </div>
@@ -43,15 +40,16 @@ export default function Home({ songs }: any) {
   useEffect(() => {
     console.log(songs);
   }, [songs]);
+
   const songComponents = songs.map((song: any) => (
     <Song data={song} key={song.id} />
   ));
 
   return (
     <>
-      <div className="text-2xl mx-auto mt-9 text-center font-bold">Library</div>
+      <div className="mx-auto text-2xl font-bold text-center mt-9">Library</div>
 
-      <div className="sm:p-9 p-3 flex flex-wrap justify-center gap-3 items-center ">
+      <div className="flex flex-wrap items-center justify-center gap-3 p-3 sm:p-9 ">
         {songComponents}
       </div>
     </>
@@ -72,11 +70,10 @@ export async function getServerSideProps({ req, res }: any) {
       metadata: true,
     },
   });
-  console.log(songs);
 
   res.setHeader(
     "Cache-Control",
-    "public, s-maxage=9000, stale-while-revalidate=59"
+    "public, s-maxage=900, stale-while-revalidate=59"
   );
   return {
     props: {

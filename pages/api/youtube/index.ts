@@ -26,14 +26,18 @@ export default async function handler(
   if (req.method !== "POST") {
     res.status(405).json({ msg: "Method not allowed" });
   } else {
-    const url = req.body.url;
-    const limit = req.body?.limit || 1;
-    if (!url) {
-      res.status(400).json({ error: "No url provided" });
-      return;
-    }
+    try {
+      const url = req.body.url;
+      const limit = req.body?.limit || 1;
+      if (!url) {
+        res.status(400).json({ error: "No url provided" });
+        return;
+      }
 
-    const songs: Metadata[] = await getInfo(url, limit);
-    res.json(songs);
+      const songs: Metadata[] = await getInfo(url, limit);
+      res.json(songs);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
   }
 }
