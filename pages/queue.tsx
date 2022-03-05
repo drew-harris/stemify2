@@ -29,7 +29,7 @@ export async function getServerSideProps({ req, res }: any) {
         metadata: true,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
     });
 
