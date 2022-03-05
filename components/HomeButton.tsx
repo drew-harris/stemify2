@@ -5,7 +5,12 @@ export default function HomeButton() {
   return (
     <Link href="/">
       <div className="m-5 overflow-hidden cursor-pointer max-w-9 max-h-9">
-        <FontAwesomeIcon fontSize={10} size="lg" icon={faHouse} />
+        <FontAwesomeIcon
+          fontSize={10}
+          size="lg"
+          className="overflow-hidden w-30 h-30"
+          icon={faHouse}
+        />
       </div>
     </Link>
   );
