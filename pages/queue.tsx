@@ -4,7 +4,7 @@ import HomeButton from "../components/HomeButton";
 
 export default function QueuePage({ songs }: any) {
   let songComponents = songs.map((song: any) => (
-    <BigSong songData={song} key={song.id} />
+    <BigSong songData={song} width={"96"} key={song.id} />
   ));
   return (
     <>

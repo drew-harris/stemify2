@@ -1,15 +1,16 @@
 import { useContext, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { queueContext } from "./layouts/LibraryLayout";
 export default function QueueSong({ data, limit }: any) {
   const { queueSongs, setQueueSongs } = useContext(queueContext);
-  const [added, setAdded] = useState(queueSongs.includes(data));
-  const add = () => {
-    setAdded(!added);
-    setQueueSongs([...queueSongs, data]);
+
+  const remove = () => {
+    setQueueSongs(queueSongs.filter((song: any) => song.id !== data.id));
   };
   return (
-    <div className="flex flex-row items-center justify-between p-2 overflow-hidden transition-shadow bg-white shadow-sm sm:4 rounded-xl hover:shadow-md">
+    <div className="flex flex-row items-center justify-between p-2 overflow-hidden transition-shadow bg-white shadow-sm shrink-0 rounded-xl hover:shadow-md">
       <div className="flex flex-row items-center truncate text-ellipsis ">
         <div className="relative w-8 h-8 mr-2 overflow-hidden rounded-full sm:w-10 sm:h-10 shrink-0 sm:mr-3">
           <Image
@@ -25,6 +26,9 @@ export default function QueueSong({ data, limit }: any) {
           <div className="font-medium">{data.metadata.artist}</div>
         </div>
       </div>
+      <button className="pr-4" onClick={remove}>
+        <FontAwesomeIcon icon={faXmark} />
+      </button>
     </div>
   );
 }
