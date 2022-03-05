@@ -13,14 +13,14 @@ const Home: NextPage = () => {
             SUBMIT
           </a>
         </Link>
+        <Link href="/library">
+          <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
+            LIBRARY
+          </a>
+        </Link>
         <Link href="/queue">
           <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
             QUEUE
-          </a>
-        </Link>
-        <Link href="/test">
-          <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
-            TEST
           </a>
         </Link>
       </div>
