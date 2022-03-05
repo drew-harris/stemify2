@@ -6,10 +6,10 @@ export default function BigSong({ songData, setColors, width = "96" }: any) {
   const { data, loading, error } = usePalette(songData.metadata.albumArt);
   return (
     <div
-      className={`flex flex-row items-center justify-between p-4 overflow-hidden sm:text-lg text-center sm:text-left transition-shadow bg-white shadow-sm md:w-${width} text-tan-700 rounded-xl hover:shadow-md`}
+      className={`flex flex-row items-center justify-between p-4 overflow-hidden text-sm sm:text-lg text-center sm:text-left transition-shadow bg-white shadow-sm md:w-${width} text-tan-700 rounded-xl hover:shadow-md`}
     >
       <div className="flex flex-row items-center ">
-        <div className="relative w-0 h-0 mr-0 overflow-hidden rounded-lg sm:w-28 sm:h-28 shrink-0 sm:mr-4">
+        <div className="relative mr-4 overflow-hidden rounded-lg w-14 h-14 sm:w-28 sm:h-28 shrink-0 md:mr-4">
           <Image
             layout="fill"
             src={songData.metadata.albumArt}
