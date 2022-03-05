@@ -9,11 +9,11 @@ function Song({ data, limit }: any) {
   };
   return (
     <div
-      className="p-4  overflow-hidden bg-white rounded-xl flex hover:shadow-md 
+      className="p-4 w-80 overflow-hidden bg-white rounded-xl flex hover:shadow-md 
     transition-shadow shadow-sm flex-row justify-between gap-3 items-center"
     >
-      <div className="flex truncate text-ellipsis flex-row w-60">
-        <div className="w-12 h-12 shrink-0 rounded-full relative mr-4">
+      <div className="flex truncate text-ellipsis flex-row ">
+        <div className="w-12 h-12 shrink-0 overflow-hidden rounded-2xl relative mr-4">
           <Image
             layout="fill"
             src={data.metadata.albumArt}
@@ -31,7 +31,7 @@ function Song({ data, limit }: any) {
         onClick={add}
         className={`rounded ${
           added ? "bg-tan-500" : "bg-tan-400"
-        }  text-white p-1 px-2 ml-2 font-semibold shrink`}
+        }  text-white p-1 px-2 ml-2 font-semibold hover:shadow-md hover:scale-105 transition-transform `}
       >
         {added ? "ADDED" : "ADD"}
       </button>
@@ -50,7 +50,9 @@ export default function Home({ songs }: any) {
   return (
     <>
       <div className="text-2xl mx-auto mt-9 text-center font-bold">Library</div>
-      <div className="p-9  flex flex-wrap  gap-5">{songComponents}</div>
+      <div className="p-9 flex flex-wrap justify-evenly gap-2 gap-y-8">
+        {songComponents}
+      </div>
     </>
   );
 }
