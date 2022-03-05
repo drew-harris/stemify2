@@ -1,21 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getPrismaPool } from "../../server_helpers/prismaPool";
 import Image from "next/image";
 
-function Song({ data }: any) {
+function Song({ data, limit }: any) {
+  const [added, setAdded] = useState(false);
+  const add = () => {
+    setAdded(!added);
+  };
   return (
-    <div className="p-4 w-max bg-white rounded-xl flex shadow-sm flex-row justify-between items-center">
-      <div className="flex flex-row items-center gap-3">
-        <div className="w-10 h-10 rounded-lg overflow-hidden relative">
-          <Image layout="fill" src={data.metadata.albumArt} alt="album art" />
+    <div
+      className="p-4  overflow-hidden bg-white rounded-xl flex hover:shadow-md 
+    transition-shadow shadow-sm flex-row justify-between gap-3 items-center"
+    >
+      <div className="flex truncate text-ellipsis flex-row w-60">
+        <div className="w-12 h-12 shrink-0 rounded-full relative mr-4">
+          <Image
+            layout="fill"
+            src={data.metadata.albumArt}
+            alt={"Album Art for " + data.metadata.albumTitle}
+          />
         </div>
-        <div>
-          <div className="font-semibold">{data.title}</div>
+        <div className="shrink truncate">
+          <div className="font-semibold truncate text-ellipsis">
+            {data.title}
+          </div>
           <div className="font-medium">{data.metadata.artist}</div>
         </div>
       </div>
-      <button className="rounded bg-tan-400 text-white p-1 px-2 ml-6 font-semibold">
-        UPLOAD
+      <button
+        onClick={add}
+        className={`rounded ${
+          added ? "bg-tan-500" : "bg-tan-400"
+        }  text-white p-1 px-2 ml-2 font-semibold shrink`}
+      >
+        {added ? "ADDED" : "ADD"}
       </button>
     </div>
   );
@@ -30,9 +48,10 @@ export default function Home({ songs }: any) {
   ));
 
   return (
-    <div className="p-32 flex justify-center flex-wrap gap-8">
-      {songComponents}
-    </div>
+    <>
+      <div className="text-2xl mx-auto mt-9 text-center font-bold">Library</div>
+      <div className="p-9  flex flex-wrap  gap-5">{songComponents}</div>
+    </>
   );
 }
 
