@@ -22,6 +22,8 @@ export default function Song({ data, limit }: any) {
         <div className="relative w-8 h-8 mr-2 overflow-hidden sm:w-12 sm:h-12 shrink-0 rounded-2xl sm:mr-4">
           <Image
             layout="fill"
+            placeholder="blur"
+            quality={40}
             src={data.metadata.albumArt}
             alt={"Album Art for " + data.metadata.albumTitle}
           />

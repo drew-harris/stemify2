@@ -14,6 +14,8 @@ export default function QueueSong({ data, limit }: any) {
       <div className="flex flex-row items-center truncate text-ellipsis ">
         <div className="relative w-8 h-8 mr-2 overflow-hidden rounded-full sm:w-10 sm:h-10 shrink-0 sm:mr-3">
           <Image
+            placeholder="blur"
+            quality={40}
             layout="fill"
             src={data.metadata.albumArt}
             alt={"Album Art for " + data.metadata.albumTitle}
