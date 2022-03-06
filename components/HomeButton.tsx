@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import Script from "next/script";
+import { config } from "@fortawesome/fontawesome-svg-core";
 import Head from "next/head";
+import { useEffect } from "react";
 export default function HomeButton() {
+  useEffect(() => {
+    config.autoAddCss = false;
+  }, []);
   return (
     <>
       <Head>
