@@ -36,7 +36,7 @@ export default async function handler(
         },
       });
       if (checkSong != null) {
-        res.status(303).json(checkSong);
+        res.status(200).json(checkSong);
         return;
       }
 
@@ -48,7 +48,7 @@ export default async function handler(
 
       const created = await createSong(url, data[0], true);
 
-      res.json(created);
+      res.status(201).json(created);
     } catch (error: any) {
       console.error(error);
       res.status(500).json({ error: error.message });
