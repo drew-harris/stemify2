@@ -2,7 +2,7 @@ import Image from "next/image";
 import { usePalette } from "react-palette";
 
 export default function BigSong({ songData, setColors, width = 96 }: any) {
-  const { data, loading, error } = usePalette(songData.metadata.albumArt);
+  const { data, loading, error } = usePalette(songData.album.image);
   return (
     <div
       className={`flex flex-row  items-center justify-between p-4 overflow-hidden text-sm sm:text-lg text-center sm:text-left transition-shadow bg-white shadow-sm sm:w-${width} text-tan-700 rounded-xl hover:shadow-md`}
@@ -12,14 +12,14 @@ export default function BigSong({ songData, setColors, width = 96 }: any) {
           <Image
             quality={80}
             layout="fill"
-            src={songData.metadata.albumArt}
-            alt={"Album Art for " + songData.metadata.albumTitle}
+            src={songData.album.image}
+            alt={"Album Art for " + songData.album.title}
           />
         </div>
         <div className="" style={{ color: data.darkMuted }}>
           <div className="font-semibold">{songData.title}</div>
-          <div className="font-medium">{songData.metadata.artist}</div>
-          <div className="font-normal ">{songData.metadata.albumTitle}</div>
+          <div className="font-medium">{songData.artist.name}</div>
+          <div className="font-normal ">{songData.album.title}</div>
           <div className="flex justify-center gap-4 mt-2 sm:justify-start">
             <div
               className="w-4 h-4 rounded-full"

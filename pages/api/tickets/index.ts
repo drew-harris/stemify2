@@ -3,7 +3,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import slugify from "slugify";
 import { uploadLinkToSlug } from "../../../server_helpers/gcstorage";
 import { getPrismaPool } from "../../../server_helpers/prismaPool";
+import { fillInArtistAndAlbum } from "../../../server_helpers/spotify";
 import { createSong } from "../../../server_helpers/tickets";
+import { getSession } from "next-auth/react";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,8 +15,14 @@ export default async function handler(
     res.status(405).json({ msg: "Method not allowed" });
   } else {
     try {
+      const session = await getSession({ req });
+      if (!session || !session.user) {
+        res.status(401).json({ msg: "Not authenticated" });
+        return;
+      }
+      console.log(session);
       const url = req.body.url;
-      const data = req.body.data;
+      let data = req.body.data;
       if (!url && !data) {
         res.status(400).json({ error: "No url or data provided" });
         return;
@@ -24,9 +32,7 @@ export default async function handler(
       const prisma = getPrismaPool();
       const checkSong = await prisma.song.findFirst({
         where: {
-          metadata: {
-            spotTrackId: data.metadata.spotTrackId,
-          },
+          id: data.id,
         },
       });
       if (checkSong != null) {
@@ -40,7 +46,10 @@ export default async function handler(
 
       await uploadLinkToSlug(url, slug);
 
-      const created = await createSong(url, data, false);
+      data = await fillInArtistAndAlbum(data);
+
+      // TODO: Change null to user
+      const created = await createSong(url, data, false, session.user);
 
       res.json(created);
     } catch (error: any) {

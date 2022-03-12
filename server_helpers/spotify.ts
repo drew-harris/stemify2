@@ -1,22 +1,6 @@
 import { getPrismaPool } from "./prismaPool";
 const prisma = getPrismaPool();
 
-type Song = {
-  title: string;
-  artist: string;
-  metadata: {
-    spotTrackId: string;
-    trackNum: string;
-    spotAlbumId: string;
-    albumTitle: string;
-    albumArt: string;
-    artist: string;
-    artistId: string;
-    previewUrl: string;
-  };
-  bpm: null;
-};
-
 let _token: any = null;
 
 export const getToken = async () => {
@@ -56,7 +40,7 @@ const getNewToken = async () => {
     const date = new Date(expiration);
     await prisma.spotify.upsert({
       where: {
-        id: "cl0912p9n00152kv5rfgrqex7",
+        id: "cl0ogqx8p0022mgv5yvl9c3pe",
       },
       update: {
         token: data.access_token,
@@ -109,10 +93,10 @@ export async function getSongData(
       throw new Error("Unable to get song data");
     }
 
-    const songs: Song[] = [];
+    const songs: any[] = [];
     for (let i = 0; i < data.tracks.items.length; i++) {
-      const trackToAdd: Song = makeSongFromSpotify(data.tracks.items[i]);
-      trackToAdd.bpm = await getBpm(trackToAdd.metadata.spotTrackId);
+      const trackToAdd: any = makeSongFromSpotify(data.tracks.items[i]);
+      trackToAdd.bpm = await getBpm(trackToAdd.id);
       songs.push(trackToAdd);
     }
 
@@ -120,6 +104,58 @@ export async function getSongData(
   } catch (err) {
     console.log(err);
     throw err;
+  }
+}
+
+export async function fillInArtistAndAlbum(data: any) {
+  try {
+    const spotArtist = await getArtistDetails(data.artist.id);
+    const spotAlbum = await getAlbumDetails(data.album.id);
+    data.artist.image = spotArtist.images[0].url;
+    data.artist.popularity = spotArtist.popularity;
+    data.artist.followers = spotArtist.followers.total || 0;
+    data.album.popularity = spotAlbum.popularity || 0;
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getArtistDetails(id: string) {
+  try {
+    const result = await fetch(`https://api.spotify.com/v1/artists/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + (await getToken()),
+      },
+    });
+    if (!result.ok) {
+      console.error(result);
+      throw new Error("Unable to get artist details");
+    }
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getAlbumDetails(id: any) {
+  try {
+    const result = await fetch(`https://api.spotify.com/v1/albums/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + (await getToken()),
+      },
+    });
+    if (!result.ok) {
+      console.error(result);
+      throw new Error("Unable to get album details");
+    }
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -187,19 +223,22 @@ function getSongName(filename: string) {
 }
 
 function makeSongFromSpotify(track: any) {
-  const betterOutput: Song = {
+  console.log(track);
+  const betterOutput: any = {
+    id: track.id,
     title: track.name,
-    artist: track.artists[0].name,
-    metadata: {
-      spotTrackId: track.id,
-      trackNum: track.track_number,
-      spotAlbumId: track.album.id,
-      albumTitle: track.album.name,
-      albumArt: track.album.images[0]?.url,
-      artist: track.artists[0].name,
-      artistId: track.artists[0].id,
-      previewUrl: track.preview_url || null,
+    artist: {
+      id: track.artists[0].id,
+      name: track.artists[0].name,
     },
+    album: {
+      id: track.album.id,
+      title: track.album.name,
+      image: track.album.images[0].url,
+    },
+    popularity: track.popularity,
+    trackNum: track.track_number,
+    previewUrl: track.preview_url || null,
     bpm: null,
   };
   return betterOutput;

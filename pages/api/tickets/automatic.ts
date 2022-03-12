@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import slugify from "slugify";
 import { uploadLinkToSlug } from "../../../server_helpers/gcstorage";
 import { getPrismaPool } from "../../../server_helpers/prismaPool";
+import { fillInArtistAndAlbum } from "../../../server_helpers/spotify";
 import { createSong } from "../../../server_helpers/tickets";
 import { getInfo } from "../../../server_helpers/youtube";
 
@@ -24,15 +25,15 @@ export default async function handler(
       const prisma = getPrismaPool();
 
       const data: any = await getInfo(url, 1);
+      console.log(data);
+
       if (!data) {
         res.status(400).json({ error: "No data found for link" });
         return;
       }
       const checkSong = await prisma.song.findFirst({
         where: {
-          metadata: {
-            spotTrackId: data[0].metadata.spotTrackId,
-          },
+          id: data.id,
         },
       });
       if (checkSong != null) {
@@ -44,11 +45,15 @@ export default async function handler(
       const slug = createSlug(data[0].title);
       data[0].slug = slug;
 
+      await fillInArtistAndAlbum(data[0]);
+
+      console.log(data);
       await uploadLinkToSlug(url, slug);
 
-      const created = await createSong(url, data[0], true);
+      const created = await createSong(url, data[0], true, null);
 
-      res.status(201).json(created);
+      // res.status(201).json(created);
+      res.json({ msg: "Created" });
     } catch (error: any) {
       console.error(error);
       res.status(500).json({ error: error.message });

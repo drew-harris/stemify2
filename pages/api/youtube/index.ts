@@ -3,22 +3,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getSongData } from "../../../server_helpers/spotify";
 import { getInfo } from "../../../server_helpers/youtube";
 
-type Metadata = {
-  title: string;
-  artist: string;
-  metadata: {
-    spotTrackId: string;
-    trackNum: string;
-    spotAlbumId: string;
-    albumTitle: string;
-    albumArt: string;
-    artist: string;
-    artistId: string;
-    previewUrl: string;
-  };
-  bpm: null;
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -34,7 +18,7 @@ export default async function handler(
         return;
       }
 
-      const songs: Metadata[] = await getInfo(url, limit);
+      const songs: any[] = await getInfo(url, limit);
       res.json(songs);
     } catch (error: any) {
       res.status(500).json({ error: error.message });

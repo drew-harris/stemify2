@@ -1,33 +1,72 @@
 import { getPrismaPool } from "./prismaPool";
 
-export async function createSong(url: string, data: any, automatic: boolean) {
+export async function createSong(
+  url: string,
+  data: any,
+  automatic: boolean,
+  user: any
+) {
   const prisma = getPrismaPool();
   const song = await prisma.song.create({
     data: {
+      id: data.id,
       title: data.title,
-      artist: data.artist,
-      innerColor: data.innerColor || "#FF0000",
-      outerColor: data.outerColor || "#0000FF",
       bpm: data.bpm,
-      automatic: automatic,
-      youtubeUrl: url,
-      metadata: {
-        create: {
-          spotAlbumId: data.metadata.spotAlbumId,
-          spotTrackId: data.metadata.spotTrackId,
-          albumArt: data.metadata.albumArt,
-          albumTitle: data.metadata.albumTitle,
-          artist: data.metadata.artist,
-          artistId: data.metadata.artistId,
-          previewUrl: data.metadata.previewUrl || null,
-          trackNum: data.metadata.trackNum || 1,
+      popularity: data.popularity,
+      previewUrl: data.previewUrl,
+      artist: {
+        connectOrCreate: {
+          where: {
+            id: data.artist.id,
+          },
+          create: {
+            id: data.artist.id,
+            name: data.artist.name,
+            image: data.artist.image,
+            popularity: data.artist.popularity,
+            followers: data.artist.followers,
+          },
+        },
+      },
+      album: {
+        connectOrCreate: {
+          where: {
+            id: data.album.id,
+          },
+          create: {
+            id: data.album.id,
+            title: data.album.title,
+            image: data.album.image,
+            popularity: data.album.popularity,
+            artist: {
+              connectOrCreate: {
+                where: {
+                  id: data.artist.id,
+                },
+                create: {
+                  id: data.artist.id,
+                  name: data.artist.name,
+                  image: data.artist.image,
+                  popularity: data.artist.popularity,
+                  followers: data.artist.followers,
+                },
+              },
+            },
+          },
         },
       },
       ticket: {
         create: {
           slug: data.slug,
+          youtubeUrl: url,
+          complete: false,
         },
       },
+      innerColor: "#FF0000",
+      outerColor: "#0000FF",
+      automatic: automatic,
+      approved: false,
+      complete: false,
     },
     include: {
       ticket: {
@@ -35,8 +74,27 @@ export async function createSong(url: string, data: any, automatic: boolean) {
           id: true,
         },
       },
-      metadata: true,
     },
   });
+  if (user) {
+    const gotUser = await prisma.user.findFirst({
+      where: {
+        email: user.email,
+      },
+    });
+
+    await prisma.song.update({
+      where: {
+        id: song.id,
+      },
+      data: {
+        user: {
+          connect: {
+            id: gotUser!.id,
+          },
+        },
+      },
+    });
+  }
   return { song };
 }

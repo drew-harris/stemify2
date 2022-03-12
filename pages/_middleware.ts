@@ -1,6 +1,6 @@
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import * as config from "../config.json";
+import config from "../config";
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   // Before march 7th

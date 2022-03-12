@@ -1,4 +1,4 @@
-import * as config from "../config.json";
+import config from "../config";
 import Countdown from "react-countdown";
 export default function Closed() {
   return (

@@ -100,7 +100,7 @@ export default function SubmitPage() {
                 songData={choice}
                 setColors={setColors}
                 width="auto"
-                key={choice.metadata.spotTrackId}
+                key={choice.id}
               />
             ))}
           </div>

@@ -13,49 +13,73 @@ datasource db {
 }
 
 model Song {
-  id         String    @id @default(cuid())
-  title      String
-  artist     String
+  id    String @id @unique
+  title String
+
+  artist   Artist  @relation(fields: [artistId], references: [id])
+  artistId String
+  album    Album?  @relation(fields: [albumId], references: [id])
+  albumId  String?
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
   innerColor String
   outerColor String
-  bpm        Float     @default(120)
-  complete   Boolean   @default(false)
-  download   Download?
-  ticket     Ticket?
-  metadata   Metadata?
-  approved   Boolean   @default(false)
-  automatic  Boolean   @default(true)
-  youtubeUrl String
-  downloads  Int       @default(0)
-  createdAt  DateTime  @default(now())
 
-  @@fulltext([title, artist])
+  popularity Int     @default(0)
+  trackNum   Int     @default(0)
+  bpm        Float   @default(120)
+  previewUrl String?
+
+  download  Download?
+  ticket    Ticket?
+  complete  Boolean   @default(false)
+  approved  Boolean   @default(false)
+  automatic Boolean   @default(true)
+
+  downloads   Int      @default(0)
+  submittedAt DateTime @default(now())
+
   @@fulltext([title])
-  @@fulltext([artist])
 }
 
-model Metadata {
-  id          String  @id @default(cuid())
-  song        Song    @relation(fields: [songId], references: [id], onDelete: Cascade)
-  songId      String
-  spotTrackId String
-  spotAlbumId String
-  albumTitle  String
-  albumArt    String
-  artist      String
-  artistId    String
-  previewUrl  String?
-  trackNum    Int
+model Artist {
+  id         String   @id @unique
+  name       String
+  image      String
+  popularity Int      @default(0)
+  followers  Int      @default(0)
+  songs      Song[]
+  createdAt  DateTime @default(now())
+
+  albums Album[]
+
+  @@fulltext([name])
+}
+
+model Album {
+  id         String   @id @unique
+  title      String
+  image      String
+  popularity Int      @default(0)
+  songs      Song[]
+  createdAt  DateTime @default(now())
+  artist     Artist   @relation(fields: [artistId], references: [id])
+  artistId   String
+
+  @@fulltext([title])
 }
 
 model Ticket {
-  id        String    @id @default(cuid())
-  song      Song      @relation(fields: [songId], references: [id], onDelete: Cascade)
-  songId    String
-  slug      String    @unique
-  started   DateTime?
-  createdAt DateTime  @default(now())
-  complete  Boolean   @default(false)
+  id         String    @id @default(cuid())
+  song       Song      @relation(fields: [songId], references: [id], onDelete: Cascade)
+  songId     String
+  slug       String    @unique
+  started    DateTime?
+  createdAt  DateTime  @default(now())
+  complete   Boolean   @default(false)
+  youtubeUrl String
 }
 
 model Download {
@@ -67,6 +91,52 @@ model Download {
   bass    String
   vocals  String
   other   String
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  songs         Song[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Spotify {
