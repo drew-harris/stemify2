@@ -4,8 +4,8 @@ import slugify from "slugify";
 import { uploadLinkToSlug } from "../../../server_helpers/gcstorage";
 import { getPrismaPool } from "../../../server_helpers/prismaPool";
 import { fillInArtistAndAlbum } from "../../../server_helpers/spotify";
-import { createSong } from "../../../server_helpers/tickets";
 import { getSession } from "next-auth/react";
+import { createSong } from "../../../server_helpers/tickets";
 
 export default async function handler(
   req: NextApiRequest,

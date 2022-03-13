@@ -16,15 +16,15 @@ export default function QueueSong({ data, limit }: any) {
           <Image
             quality={40}
             layout="fill"
-            src={data.metadata.albumArt}
-            alt={"Album Art for " + data.metadata.albumTitle}
+            src={data.album.image}
+            alt={"Album Art for " + data.album.title}
           />
         </div>
         <div className="text-black truncate shrink">
           <div className="font-semibold truncate text-ellipsis">
             {data.title}
           </div>
-          <div className="font-medium">{data.metadata.artist}</div>
+          <div className="font-medium">{data.artist.name}</div>
         </div>
       </div>
       <button className="pr-4" onClick={remove}>

@@ -64,6 +64,7 @@ model Album {
   image      String
   popularity Int      @default(0)
   songs      Song[]
+  totalSongs Int      @default(0)
   createdAt  DateTime @default(now())
   artist     Artist   @relation(fields: [artistId], references: [id])
   artistId   String

@@ -41,12 +41,11 @@ export async function getStaticProps({ req, res }: any) {
       complete: true,
     },
     orderBy: {
-      createdAt: "desc",
+      submittedAt: "desc",
     },
-    select: {
-      id: true,
-      title: true,
-      metadata: true,
+    include: {
+      album: true,
+      artist: true,
     },
   });
 

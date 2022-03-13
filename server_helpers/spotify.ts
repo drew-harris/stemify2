@@ -1,6 +1,8 @@
 import { getPrismaPool } from "./prismaPool";
 const prisma = getPrismaPool();
 
+const MIN_SONGS_FOR_ALBUM = 3;
+
 let _token: any = null;
 
 export const getToken = async () => {
@@ -115,6 +117,8 @@ export async function fillInArtistAndAlbum(data: any) {
     data.artist.popularity = spotArtist.popularity;
     data.artist.followers = spotArtist.followers.total || 0;
     data.album.popularity = spotAlbum.popularity || 0;
+    data.album.totalSongs = spotAlbum.total_tracks || 0;
+
     return data;
   } catch (error) {
     throw error;

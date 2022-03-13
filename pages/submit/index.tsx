@@ -1,14 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useRef, useState } from "react";
 import { DebounceInput } from "react-debounce-input";
-import { usePalette } from "react-palette";
 import { PropagateLoader } from "react-spinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import BigSong from "../../components/BigSong";
 
 export default function SubmitPage() {
+  const { data: session } = useSession();
+
   const [inputLink, setInputLink] = useState("");
   const [choices, setChoices] = useState([]);
   const [choicesLoading, setChoicesLoading] = useState(false);
@@ -67,6 +68,23 @@ export default function SubmitPage() {
       console.error(error);
     }
   };
+
+  if (!session?.user) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-5 p-3 mx-auto m-9 ">
+        <div className="text-lg font-bold text-center m-9">
+          You need to be logged in to submit a song
+        </div>
+        <button
+          className="p-1 px-2 ml-2 font-semibold text-white transition-transform rounded bg-tan-500 hover:shadow-md hover:scale-105 "
+          onClick={() => signIn("discord")}
+        >
+          SIGN IN
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Link href="/">

@@ -7,7 +7,8 @@ export async function createSong(
   user: any
 ) {
   const prisma = getPrismaPool();
-  const song = await prisma.song.create({
+  let song = null;
+  song = await prisma.song.create({
     data: {
       id: data.id,
       title: data.title,

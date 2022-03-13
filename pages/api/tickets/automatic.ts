@@ -52,8 +52,7 @@ export default async function handler(
 
       const created = await createSong(url, data[0], true, null);
 
-      // res.status(201).json(created);
-      res.json({ msg: "Created" });
+      res.status(201).json(created);
     } catch (error: any) {
       console.error(error);
       res.status(500).json({ error: error.message });

@@ -19,16 +19,17 @@ export default function QueuePage({ songs }: any) {
 
 export async function getStaticProps({ req, res }: any) {
   const prisma = await getPrismaPool();
-  const songs = await prisma.song.findMany({
+  let songs = await prisma.song.findMany({
     where: {
       complete: false,
     },
     select: {
       title: true,
-      metadata: true,
+      artist: true,
+      album: true,
     },
     orderBy: {
-      createdAt: "asc",
+      submittedAt: "desc",
     },
   });
 
