@@ -27,13 +27,15 @@ export default async function handler(
       const data: any = await getInfo(url, 1);
       console.log(data);
 
-      if (!data) {
+      console.log(data[0]);
+      if (!data[0]) {
         res.status(400).json({ error: "No data found for link" });
         return;
       }
+      console.log("SONG ID: ", data.id);
       const checkSong = await prisma.song.findFirst({
         where: {
-          id: data.id,
+          id: data[0].id,
         },
       });
       if (checkSong != null) {
@@ -44,6 +46,7 @@ export default async function handler(
       // Create Slug
       const slug = createSlug(data[0].title);
       data[0].slug = slug;
+      console.log("SLUG: ", slug);
 
       await fillInArtistAndAlbum(data[0]);
 
