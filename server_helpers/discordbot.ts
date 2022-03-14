@@ -32,6 +32,7 @@ export async function sendDiscordDM(userId: string, embed: object) {
     // Create embed
     await dm.send({ embed });
   } catch (error) {
+    console.log(error);
     return;
   }
 }
