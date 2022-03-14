@@ -1,7 +1,7 @@
 import { getPrismaPool } from "../server_helpers/prismaPool";
-import BigSong from "../components/BigSong";
 import HomeButton from "../components/HomeButton";
 import Head from "next/head";
+import BigSong from "../components/Songs/BigSong";
 
 export default function QueuePage({ songs }: any) {
   let songComponents = songs.map((song: any) => (

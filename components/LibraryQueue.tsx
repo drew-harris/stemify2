@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { queueContext } from "./layouts/LibraryLayout";
-import QueueSong from "./QueueSong";
+import QueueSong from "./Songs/QueueSong";
 
 export default function LibraryQueue(props: any) {
   const { queueSongs, isUploading, setIsUploading } = useContext(queueContext);

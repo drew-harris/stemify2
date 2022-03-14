@@ -3,8 +3,8 @@ import { getPrismaPool } from "../../server_helpers/prismaPool";
 import LibraryLayout, {
   queueContext,
 } from "../../components/layouts/LibraryLayout";
-import Song from "../../components/Song";
 import Head from "next/head";
+import Song from "../../components/Songs/Song";
 
 function Home({ songs }: any) {
   useEffect(() => {

@@ -1,9 +1,8 @@
 import Head from "next/head";
 import { ReactElement } from "react";
-import HomeButton from "../../components/HomeButton";
-import LibraryLayout from "../../components/layouts/LibraryLayout";
-import BigSong from "../../components/Songs/BigSong";
-import { getPrismaPool } from "../../server_helpers/prismaPool";
+import HomeButton from "../../../components/HomeButton";
+import BigSong from "../../../components/Songs/BigSong";
+import { getPrismaPool } from "../../../server_helpers/prismaPool";
 
 function SingleSong({ song }: any) {
   return (

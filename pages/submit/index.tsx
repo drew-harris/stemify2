@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import BigSong from "../../components/BigSong";
 import Head from "next/head";
+import BigSong from "../../components/Songs/BigSong";
 
 export default function SubmitPage() {
   const { data: session } = useSession();
