@@ -17,7 +17,10 @@ export default async function handler(
       ticket = await prisma.ticket.findFirst({
         where: {
           complete: false,
-          started: { lt: new Date(Date.now() - 2 * 60 * 1000) },
+          started: { lt: new Date(Date.now() - 20 * 60 * 1000) },
+        },
+        include: {
+          song: true,
         },
       });
       if (ticket) {
@@ -26,25 +29,11 @@ export default async function handler(
         await prisma.ticket.update({
           where: { id: ticket.id },
           data: { started: new Date() },
+          include: { song: true },
         });
-        const song = await prisma.song.findFirst({
-          where: { id: ticket.songId, complete: false },
-          select: {
-            id: true,
-            title: true,
-            artist: true,
-            bpm: true,
-            innerColor: true,
-            outerColor: true,
-          },
-        });
-        if (!song) {
-          res.status(404).json({ error: "No song found" });
-          return;
-        }
         res.json({
           ticket: ticket,
-          song: song,
+          song: ticket.song,
         });
         return;
       }
@@ -58,19 +47,9 @@ export default async function handler(
         const updatedTicket = await prisma.ticket.update({
           where: { id: ticket.id },
           data: { started: new Date() },
+          include: { song: true },
         });
-        const song = await prisma.song.findFirst({
-          where: { id: ticket.songId },
-          select: {
-            id: true,
-            title: true,
-            artist: true,
-            bpm: true,
-            innerColor: true,
-            outerColor: true,
-          },
-        });
-        res.json({ ticket: updatedTicket, song });
+        res.json({ ticket: updatedTicket, song: updatedTicket.song });
         return;
       }
 
