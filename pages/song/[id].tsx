@@ -8,7 +8,7 @@ function SingleSong({ song }: any) {
   return (
     <>
       <Head>
-        <title>{song.title}</title>
+        <title>{song?.title || "STEMIFY"}</title>
       </Head>
       <div className="flex flex-col items-center justify-center gap-5 p-3 mx-auto m-9 ">
         {song && <BigSong songData={song} width={"96"} />}
