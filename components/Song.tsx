@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { queueContext } from "./layouts/LibraryLayout";
+import Link from "next/link";
 export default function Song({ data, limit }: any) {
   const { queueSongs, setQueueSongs, isUploading } = useContext(queueContext);
   const [added, setAdded] = useState(queueSongs.includes(data));
@@ -28,9 +29,12 @@ export default function Song({ data, limit }: any) {
           />
         </div>
         <div className="text-black truncate shrink">
-          <div className="font-semibold truncate text-ellipsis">
+          <Link
+            href={`/song/${data.id}`}
+            className="font-semibold truncate text-ellipsis"
+          >
             {data.title}
-          </div>
+          </Link>
           <div className="font-medium">{data.artist.name}</div>
         </div>
       </div>

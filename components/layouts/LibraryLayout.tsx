@@ -22,7 +22,7 @@ export default function Layout({ children }: any) {
     <div>
       <HomeButton></HomeButton>
       <queueContext.Provider value={value}>
-        <div className="sm:grid grid-cols-1  sm:grid-cols-[1fr_300px] sm:pr-9">
+        <div className="sm:grid grid-cols-1  sm:grid-cols-[1fr_350px] sm:pr-9">
           <div className=" shrink">{children}</div>
           <LibraryQueue />
         </div>
