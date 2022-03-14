@@ -29,11 +29,8 @@ export default function Song({ data, limit }: any) {
           />
         </div>
         <div className="text-black truncate shrink">
-          <Link
-            href={`/song/${data.id}`}
-            className="font-semibold truncate text-ellipsis"
-          >
-            {data.title}
+          <Link href={`/song/${data.id}`} passHref={true}>
+            <a className="font-semibold truncate text-ellipsis">{data.title}</a>
           </Link>
           <div className="font-medium">{data.artist.name}</div>
         </div>
