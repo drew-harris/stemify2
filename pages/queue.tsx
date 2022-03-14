@@ -29,7 +29,7 @@ export async function getStaticProps({ req, res }: any) {
       album: true,
     },
     orderBy: {
-      submittedAt: "desc",
+      submittedAt: "asc",
     },
   });
 
