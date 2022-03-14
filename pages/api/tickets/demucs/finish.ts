@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@prisma/client";
+import { MessageEmbed } from "discord.js";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { sendDiscordDM } from "../../../../server_helpers/discordbot";
 import { getPrismaPool } from "../../../../server_helpers/prismaPool";
@@ -95,17 +96,20 @@ async function notifyUser(songId: any) {
 
     const providerAccountId = song?.user?.accounts[0]?.providerAccountId;
 
-    const embed = {
-      title: `${song?.artist?.name} - ${song?.title}`,
+    const embed: any = {
+      title: `${song.artist.name} - ${song.title}`,
+      author: {
+        name: "Your song is ready to download!",
+      },
       url: `https://stemify2.net/song/${song?.id}`,
-      description: `${song?.album?.title}`,
-      color: song.innerColor,
+      hexColor: song.innerColor,
       thumbnail: {
         url: song?.album?.image,
       },
+      timestamp: new Date(),
     };
 
-    sendDiscordDM(providerAccountId, embed);
+    await sendDiscordDM(providerAccountId, embed);
   } catch (error) {
     console.log(error);
     throw error;
