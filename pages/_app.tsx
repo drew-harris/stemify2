@@ -17,6 +17,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  const inside = getLayout(<Component {...pageProps} />);
-  return <SessionProvider>{inside}</SessionProvider>;
+  return (
+    <SessionProvider>{getLayout(<Component {...pageProps} />)}</SessionProvider>
+  );
 }

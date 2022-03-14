@@ -76,6 +76,7 @@ export default async function handler(
 
       res.status(404).json({ ticket: null, song: null });
     } catch (error: any) {
+      console.error(error);
       res.status(500).json({ error: error.message });
     }
   }

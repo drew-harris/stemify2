@@ -23,15 +23,15 @@ export default function Song({ data, limit }: any) {
           <Image
             layout="fill"
             quality={40}
-            src={data.metadata.albumArt}
-            alt={"Album Art for " + data.metadata.albumTitle}
+            src={data.album.image}
+            alt={"Album Art for " + data.album.title}
           />
         </div>
         <div className="text-black truncate shrink">
           <div className="font-semibold truncate text-ellipsis">
             {data.title}
           </div>
-          <div className="font-medium">{data.metadata.artist}</div>
+          <div className="font-medium">{data.artist.name}</div>
         </div>
       </div>
       {!isUploading ? (
