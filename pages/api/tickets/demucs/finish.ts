@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { sendDiscordDM } from "../../../../server_helpers/discordbot";
 import { getPrismaPool } from "../../../../server_helpers/prismaPool";
 
 export default async function handler(
@@ -45,15 +46,68 @@ export default async function handler(
             },
           },
         },
+        include: {
+          user: true,
+        },
       });
+
       if (!result) {
         res.status(404).json({ error: "No song found" });
         return;
       }
+
+      await notifyUser(songId);
       res.json(result);
       // Do stuff here
     } catch (error: any) {
+      console.log(error);
       res.status(500).json({ error: error.message });
     }
+  }
+}
+
+async function notifyUser(songId: any) {
+  try {
+    const client = await getPrismaPool();
+    const song = await client.song.findFirst({
+      where: {
+        id: songId,
+      },
+      include: {
+        user: {
+          include: {
+            accounts: true,
+          },
+        },
+
+        album: true,
+        artist: true,
+      },
+    });
+    console.log(song);
+    console.log(song?.user?.accounts);
+    if (!song?.user?.accounts[0]?.providerAccountId) {
+      throw new Error("No provider account id");
+    }
+
+    const providerAccountId = song?.user?.accounts[0]?.providerAccountId;
+
+    const embed = {
+      title: `${song?.artist?.name} - ${song?.title}`,
+      url: `https://stemify2.net/song/${song?.id}`,
+      description: `${song?.album?.title}`,
+      color: song.innerColor,
+      thumbnail: {
+        url: song?.album?.image,
+      },
+    };
+
+    sendDiscordDM(providerAccountId, embed);
+
+    if (!song) {
+      return;
+    }
+  } catch (error) {
+    throw error;
   }
 }
