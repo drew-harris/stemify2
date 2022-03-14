@@ -17,7 +17,7 @@ export default async function handler(
       ticket = await prisma.ticket.findFirst({
         where: {
           complete: false,
-          started: { lt: new Date(Date.now() - 20 * 60 * 1000) },
+          started: { lt: new Date(Date.now() - 10 * 60 * 1000) },
         },
         include: {
           song: {

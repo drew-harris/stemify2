@@ -1,6 +1,7 @@
 import { getPrismaPool } from "../server_helpers/prismaPool";
 import BigSong from "../components/BigSong";
 import HomeButton from "../components/HomeButton";
+import Head from "next/head";
 
 export default function QueuePage({ songs }: any) {
   let songComponents = songs.map((song: any) => (
@@ -8,6 +9,9 @@ export default function QueuePage({ songs }: any) {
   ));
   return (
     <>
+      <Head>
+        <title>QUEUE</title>
+      </Head>
       <HomeButton />
       <div className="text-lg font-bold text-center m-9">QUEUE</div>
       <div className="flex flex-col items-center justify-center gap-5 p-3 mx-auto m-9 ">

@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -11,8 +12,11 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>STEMIFY</title>
+      </Head>
       <div className="mx-auto mb-4 text-center text-neutral-800 font-bold  text-[28px] mt-32">
-        STEMIFY 2
+        STEMIFY
       </div>
       <div className="mx-auto  text-center text-tan-500 font-bold  text-[28px] ">
         (WORK IN PROGRESS)

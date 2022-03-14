@@ -4,6 +4,7 @@ import LibraryLayout, {
   queueContext,
 } from "../../components/layouts/LibraryLayout";
 import Song from "../../components/Song";
+import Head from "next/head";
 
 function Home({ songs }: any) {
   useEffect(() => {
@@ -16,6 +17,9 @@ function Home({ songs }: any) {
 
   return (
     <div>
+      <Head>
+        <title>LIBRARY</title>
+      </Head>
       <div className="mx-auto text-2xl font-bold text-center ">LIBRARY</div>
 
       <div className="grid items-stretch gap-4 p-3 lg:grid-cols-3 sm:grid-cols-2 justify-items-stretch sm:p-9 ">
