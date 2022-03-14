@@ -1,5 +1,5 @@
 const config = {
-  releaseDate: 1648411960000,
+  releaseDate: 0,
 };
 
 export default config;

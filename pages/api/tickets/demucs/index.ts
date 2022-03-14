@@ -20,7 +20,12 @@ export default async function handler(
           started: { lt: new Date(Date.now() - 20 * 60 * 1000) },
         },
         include: {
-          song: true,
+          song: {
+            include: {
+              artist: true,
+              album: true,
+            },
+          },
         },
       });
       if (ticket) {
@@ -47,7 +52,14 @@ export default async function handler(
         const updatedTicket = await prisma.ticket.update({
           where: { id: ticket.id },
           data: { started: new Date() },
-          include: { song: true },
+          include: {
+            song: {
+              include: {
+                artist: true,
+                album: true,
+              },
+            },
+          },
         });
         res.json({ ticket: updatedTicket, song: updatedTicket.song });
         return;
