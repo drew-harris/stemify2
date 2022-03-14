@@ -85,6 +85,9 @@ async function notifyUser(songId: any) {
       },
     });
     console.log(song);
+    if (!song) {
+      return;
+    }
     console.log(song?.user?.accounts);
     if (!song?.user?.accounts[0]?.providerAccountId) {
       throw new Error("No provider account id");
@@ -103,11 +106,8 @@ async function notifyUser(songId: any) {
     };
 
     sendDiscordDM(providerAccountId, embed);
-
-    if (!song) {
-      return;
-    }
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
