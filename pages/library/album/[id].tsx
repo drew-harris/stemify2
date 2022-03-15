@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { ReactElement, useEffect } from "react";
 import HomeButton from "../../../components/HomeButton";
+import LibraryLayout from "../../../components/layouts/LibraryLayout";
 import BigSong from "../../../components/Songs/BigSong";
 import { getPrismaPool } from "../../../server_helpers/prismaPool";
 
@@ -13,10 +14,19 @@ function SingleSong({ album }: any) {
       <Head>
         <title>{album?.title || "STEMIFY"}</title>
       </Head>
-      <HomeButton></HomeButton>
+      {album && (album.songs[0].title || "")}
     </>
   );
 }
+
+SingleSong.getLayout = function getLayout(page: ReactElement) {
+  console.log("layout loaded");
+  return (
+    <LibraryLayout>
+      <SingleSong {...page.props} />
+    </LibraryLayout>
+  );
+};
 
 export default SingleSong;
 
