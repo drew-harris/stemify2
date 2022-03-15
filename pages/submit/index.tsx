@@ -42,6 +42,7 @@ export default function SubmitPage() {
   const submit = async () => {
     try {
       const song: any = choices[0];
+
       song.innerColor = colors[0];
       song.outerColor = colors[1];
 
