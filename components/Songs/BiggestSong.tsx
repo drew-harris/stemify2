@@ -10,8 +10,6 @@ export default function BiggestSong({ songData }: any) {
       sdk = await import("stem-player-sdk");
       console.log(sdk);
     }
-    console.log("%cMADE WITH LOVE BY DONDAINCOMING", "color:red");
-    console.log("%cI <3 KANO SO MUCH", "color:red");
     init();
   }, []);
 

@@ -127,6 +127,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  level         Int       @default(0)
   accounts      Account[]
   sessions      Session[]
   songs         Song[]

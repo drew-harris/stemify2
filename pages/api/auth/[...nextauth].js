@@ -8,6 +8,7 @@ const prisma = getPrismaPool();
 export default NextAuth({
   // Configure one or more authentication providers
   secret: process.env.NEXT_AUTH_SECRET,
+  strategy: "jwt",
   adapter: PrismaAdapter(prisma),
   providers: [
     DiscordProvider({
@@ -15,4 +16,11 @@ export default NextAuth({
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
     }),
   ],
+  updateAge: 96 * 60 * 60, // 96 hours
+  callbacks: {
+    async session({ session, user }) {
+      session.user.level = user.level;
+      return session;
+    },
+  },
 });
