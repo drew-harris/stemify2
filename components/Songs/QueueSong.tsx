@@ -10,7 +10,7 @@ export default function QueueSong({ data, limit }: any) {
     setQueueSongs(queueSongs.filter((song: any) => song.id !== data.id));
   };
   return (
-    <div className="flex flex-row items-center justify-between p-1 overflow-hidden transition-shadow bg-white shadow-sm shrink-0 rounded-xl hover:shadow-md">
+    <div className="flex flex-row items-center justify-between p-1 overflow-hidden transition-shadow bg-white shadow-md shrink-0 rounded-xl hover:shadow-md">
       <div className="flex flex-row items-center truncate text-ellipsis ">
         <div className="relative w-6 h-6 mr-2 overflow-hidden rounded-full sm:w-6 sm:h-6 shrink-0 sm:mr-3">
           <Image
@@ -26,7 +26,7 @@ export default function QueueSong({ data, limit }: any) {
           </div>
         </div>
       </div>
-      <button className="pr-4" onClick={remove}>
+      <button className="pr-4 ml-2" onClick={remove}>
         <FontAwesomeIcon icon={faXmark} />
       </button>
     </div>
