@@ -7,7 +7,7 @@ env:
   NEXT_AUTH_SECRET: ${{secrets.NEXT_AUTH_SECRET}}
   NEXTAUTH_URL: https://www.stemify2.net
   DISCORD_BOT_TOKEN: ${{secrets.DISCORD_BOT_TOKEN}}
-  NEXTAUTH_SECRET: ${{NEXT_AUTH_SECRET}}
+  NEXTAUTH_SECRET: ${{secrets.NEXT_AUTH_SECRET}}
 
 jobs:
   cypress-run:
