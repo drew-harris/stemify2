@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "cypress": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run --browser chrome",
+    "ci:nobuild": "start-server-and-test start http://localhost:3000/ cypress:run",
+    "ci": "next build && start-server-and-test start http://localhost:3000/ cypress:run"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.3.0",
@@ -41,6 +44,7 @@
     "eslint-config-next": "12.1.0",
     "postcss": "^8.4.7",
     "prisma": "^3.10.0",
+    "start-server-and-test": "^1.14.0",
     "tailwindcss": "^3.0.23",
     "ts-node": "^10.5.0",
     "typescript": "^4.6.2"

@@ -30,7 +30,6 @@ function Home({ songs }: any) {
 }
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  console.log("layout loaded");
   return (
     <LibraryLayout>
       <Home {...page.props} />
