@@ -9,6 +9,11 @@ env:
   DISCORD_BOT_TOKEN: ${{secrets.DISCORD_BOT_TOKEN}}
   NEXTAUTH_SECRET: ${{secrets.NEXT_AUTH_SECRET}}
 
+  DATABASE_URL: ${{secrets.DATABASE_URL}}
+  SPOTIFY_BASE64: ${{secrets.SPOTIFY_BASE64}}
+  GOOGLE_CLIENT_EMAIL: ${{secrets.GOOGLE_CLIENT_EMAIL}}
+  GOOGLE_PRIVATE_KEY: ${{secrets.GOOGLE_PRIVATE_KEY}}
+
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
