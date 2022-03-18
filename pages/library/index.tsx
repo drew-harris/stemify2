@@ -1,8 +1,6 @@
 import { ReactElement, useEffect } from "react";
 import { getPrismaPool } from "../../server_helpers/prismaPool";
-import LibraryLayout, {
-  queueContext,
-} from "../../components/layouts/LibraryLayout";
+import LibraryLayout from "../../components/layouts/LibraryLayout";
 import Head from "next/head";
 import Song from "../../components/Songs/Song";
 

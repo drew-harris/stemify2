@@ -10,7 +10,8 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --browser chrome",
     "ci:nobuild": "start-server-and-test start http://localhost:3000/ cypress:run",
-    "ci": "next build && start-server-and-test start http://localhost:3000/ cypress:run"
+    "ci": "next build && start-server-and-test start http://localhost:3000/ cypress:run",
+    "quicktest": "start-server-and-test dev http://localhost:3000/ cypress:run"
   },
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "^6.1.0",
