@@ -28,3 +28,18 @@ jobs:
           build: npm run build
           start: npm run start
           wait-on: 'http://localhost:3000'
+  deploy:
+    needs: cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      #  your build commands
+      # - run: |
+      #    ng build --prod
+      - uses: amondnet/vercel-action@v20 #deploy
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Optional 
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}  # Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} # Required 
+          working-directory: ./sub-directory
