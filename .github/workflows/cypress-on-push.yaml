@@ -1,5 +1,8 @@
 name: End-to-end tests
-on: [push]
+on:
+  push:
+    branches:
+    - !master
 
 env: 
   DISCORD_CLIENT_ID: ${{secrets.DISCORD_CLIENT_ID}}
