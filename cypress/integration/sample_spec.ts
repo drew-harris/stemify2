@@ -65,4 +65,11 @@ describe("Album", () => {
   });
 });
 
+describe("Not signed in on submit", () => {
+  it("Sees log in button on submit page", () => {
+    cy.visit("http://localhost:3000/submit");
+    cy.contains("SIGN IN WITH DISCORD");
+  });
+});
+
 export {};

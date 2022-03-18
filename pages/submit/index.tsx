@@ -3,14 +3,12 @@ import { DebounceInput } from "react-debounce-input";
 import { PropagateLoader } from "react-spinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { signIn, useSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import Head from "next/head";
 import BigSong from "../../components/Songs/BigSong";
 
-export default function SubmitPage() {
-  const { data: session } = useSession();
-
+export default function SubmitPage({ session }: any) {
   const [inputLink, setInputLink] = useState("");
   const [choices, setChoices] = useState([]);
   const [choicesLoading, setChoicesLoading] = useState(false);
@@ -89,7 +87,7 @@ export default function SubmitPage() {
             className="p-1 px-2 ml-2 font-semibold text-white transition-transform rounded bg-tan-500 hover:shadow-md hover:scale-105 "
             onClick={() => signIn("discord")}
           >
-            SIGN IN
+            SIGN IN WITH DISCORD
           </button>
         </div>
       </>
@@ -99,11 +97,18 @@ export default function SubmitPage() {
   return (
     <div>
       {head}
-      <Link href="/">
-        <div className="m-5 cursor-pointer">
-          <FontAwesomeIcon size="lg" icon={faHouse} />
-        </div>
-      </Link>
+      <div className="flex justify-between">
+        <Link href="/">
+          <div className="m-5 cursor-pointer">
+            <FontAwesomeIcon size="lg" icon={faHouse} />
+          </div>
+        </Link>
+        <a href="https://music.youtube.com/" target="_blank" rel="noreferrer">
+          <div className="m-5 cursor-pointer text-tan-400">
+            <FontAwesomeIcon size="lg" icon={"youtube"} />
+          </div>
+        </a>
+      </div>
       <div className="flex flex-col items-center gap-4 p-4 mt-24 text-center sm:p-9 PAGE">
         <DebounceInput
           minLength={3}
@@ -147,4 +152,21 @@ export default function SubmitPage() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const session: any = await getSession(context);
+  if (!session?.user) {
+    return {
+      props: {
+        session: null,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
 }
