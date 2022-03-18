@@ -58,6 +58,6 @@ export async function getStaticProps({ req, res }: any) {
     props: {
       songs,
     },
-    revalidate: 1,
+    revalidate: 100,
   };
 }
