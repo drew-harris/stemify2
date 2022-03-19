@@ -5,7 +5,7 @@ import BigSong from "../components/Songs/BigSong";
 
 export default function QueuePage({ songs }: any) {
   let songComponents = songs.map((song: any) => (
-    <BigSong songData={song} width={"96"} key={song.id} />
+    <BigSong songData={song} width={"96"} key={song.id} setColors={() => {}} />
   ));
   return (
     <>
