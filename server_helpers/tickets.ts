@@ -15,6 +15,7 @@ export async function createSong(
       bpm: data.bpm,
       popularity: data.popularity,
       previewUrl: data.previewUrl,
+      trackNum: data.trackNum,
       artist: {
         connectOrCreate: {
           where: {

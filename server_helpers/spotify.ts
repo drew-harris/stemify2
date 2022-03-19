@@ -99,6 +99,7 @@ export async function getSongData(
     for (let i = 0; i < data.tracks.items.length; i++) {
       const trackToAdd: any = makeSongFromSpotify(data.tracks.items[i]);
       trackToAdd.bpm = await getBpm(trackToAdd.id);
+      trackToAdd.trackNum = await getTrackNum(trackToAdd.id);
       songs.push(trackToAdd);
     }
 

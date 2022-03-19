@@ -32,7 +32,7 @@ export default async function handler(
         res.status(400).json({ error: "No data found for link" });
         return;
       }
-      console.log("SONG ID: ", data.id);
+      console.log("SONG ID: ", data[0].id);
       const checkSong = await prisma.song.findFirst({
         where: {
           id: data[0].id,

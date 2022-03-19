@@ -2,13 +2,13 @@ import Head from "next/head";
 import { ReactElement, useEffect } from "react";
 import HomeButton from "../../../components/HomeButton";
 import LibraryLayout from "../../../components/layouts/LibraryLayout";
-import Song from "../../../components/Songs/Song";
+import WideSong from "../../../components/Songs/WideSong";
 import { getPrismaPool } from "../../../server_helpers/prismaPool";
 
 function Album({ album }: any) {
   const songs = album?.songs;
   const songComponents = songs?.map((song: any) => (
-    <Song data={song} key={song.id} />
+    <WideSong showTrackNumber={true} data={song} key={song.id} />
   ));
   useEffect(() => {
     console.log(album);
@@ -18,7 +18,7 @@ function Album({ album }: any) {
       <Head>
         <title>{album?.title || "STEMIFY"}</title>
       </Head>
-      {songComponents}
+      <div className="justify-center p-8 pt-4">{songComponents}</div>
     </>
   );
 }

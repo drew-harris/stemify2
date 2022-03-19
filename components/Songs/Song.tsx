@@ -25,6 +25,7 @@ export default function Song({ data, limit }: any) {
             <Image
               layout="fill"
               quality={40}
+              className="cursor-pointer"
               src={data.album.image}
               alt={"Album Art for " + data.album.title}
             />

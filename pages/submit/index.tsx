@@ -7,6 +7,7 @@ import { getSession, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import Head from "next/head";
 import BigSong from "../../components/Songs/BigSong";
+import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 export default function SubmitPage({ session }: any) {
   const [inputLink, setInputLink] = useState("");
@@ -105,7 +106,9 @@ export default function SubmitPage({ session }: any) {
         </Link>
         <a href="https://music.youtube.com/" target="_blank" rel="noreferrer">
           <div className="m-5 cursor-pointer text-tan-400">
-            <FontAwesomeIcon size="lg" icon={"youtube"} />
+            {/*
+    // @ts-ignore */}
+            <FontAwesomeIcon size="lg" icon={faYoutube} />
           </div>
         </a>
       </div>
