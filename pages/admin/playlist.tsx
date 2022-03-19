@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { PulseLoader } from "react-spinners";
+import Head from "next/head";
 
 function PlaylistSong({ url }: any) {
   const [data, setData] = useState(null) as any;
@@ -121,6 +122,9 @@ export default function AdminIndex() {
 
   return (
     <>
+      <Head>
+        <title>Admin</title>
+      </Head>
       <HomeButton></HomeButton>
       <div className="flex flex-col items-center gap-8">
         <h1 className="text-2xl font-bold text-center ">PLAYLIST UPLOAD</h1>
