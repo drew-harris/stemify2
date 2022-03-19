@@ -36,11 +36,6 @@ const Home: NextPage = () => {
           </a>
         </Link>
 
-        <Link href="/queue">
-          <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
-            QUEUE
-          </a>
-        </Link>
         {session?.user?.level > 0 && (
           <Link href="/admin">
             <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
