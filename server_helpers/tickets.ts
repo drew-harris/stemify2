@@ -8,6 +8,10 @@ export async function createSong(
 ) {
   const prisma = getPrismaPool();
   let song = null;
+
+  let innerColor = data.innerColor || "#FF0000";
+  let outerColor = data.outerColor || "#0000FF";
+
   song = await prisma.song.create({
     data: {
       id: data.id,
@@ -64,8 +68,8 @@ export async function createSong(
           complete: false,
         },
       },
-      innerColor: data.innerColor as string | "#FF0000",
-      outerColor: data.outerColor as string | "#0000FF",
+      innerColor,
+      outerColor,
       automatic: automatic,
       approved: false,
       complete: false,

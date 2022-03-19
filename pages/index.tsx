@@ -2,10 +2,11 @@ import type { NextPage } from "next";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import { userInfo } from "os";
 import { useEffect } from "react";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
+  const { data: session }: any = useSession();
   useEffect(() => {
     console.log(session);
   });
@@ -34,6 +35,19 @@ const Home: NextPage = () => {
             QUEUE
           </a>
         </Link>
+
+        <Link href="/queue">
+          <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
+            QUEUE
+          </a>
+        </Link>
+        {session?.user?.level > 0 && (
+          <Link href="/admin">
+            <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
+              ADMIN
+            </a>
+          </Link>
+        )}
         {session?.user ? (
           <button
             onClick={() => signOut()}
