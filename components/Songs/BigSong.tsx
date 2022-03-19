@@ -1,8 +1,15 @@
 import Image from "next/image";
+import { useEffect } from "react";
 import { usePalette } from "react-palette";
 
 export default function BigSong({ songData, setColors, width = 96 }: any) {
   const { data, loading, error } = usePalette(songData.album.image);
+
+  useEffect(() => {
+    if (data) {
+      setColors([data.vibrant, data.darkVibrant]);
+    }
+  }, [data, setColors]);
   return (
     <div
       className={`flex flex-row  items-center justify-between p-4 overflow-hidden text-sm sm:text-lg text-center sm:text-left transition-shadow bg-white shadow-sm sm:w-${width} text-tan-700 rounded-xl hover:shadow-md`}

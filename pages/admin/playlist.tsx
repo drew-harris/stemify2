@@ -7,11 +7,20 @@ import Link from "next/link";
 
 import { PulseLoader } from "react-spinners";
 import Head from "next/head";
+import { usePalette } from "react-palette";
 
 function PlaylistSong({ url }: any) {
   const [data, setData] = useState(null) as any;
   const [submitLoad, setSubmitLoad] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [colors, setColors] = useState(["#FF0000", "#0000FF"]);
+  const { data: palletteData, loading, error } = usePalette(data?.album?.image);
+
+  useEffect(() => {
+    if (palletteData.vibrant && palletteData.darkVibrant) {
+      setColors([palletteData.vibrant, palletteData.darkVibrant]);
+    }
+  }, [palletteData, setColors, palletteData.vibrant, palletteData.darkVibrant]);
 
   const getData = async (url: any) => {
     const response = await fetch("/api/youtube", {
@@ -32,6 +41,11 @@ function PlaylistSong({ url }: any) {
   const submitSong = async () => {
     console.log("Submitting song");
     setSubmitLoad(true);
+    let dataWithColors = {
+      ...data,
+      innerColor: colors[0],
+      outerColor: colors[1],
+    };
     const response: any = await fetch("/api/tickets", {
       method: "POST",
       headers: {
@@ -39,7 +53,7 @@ function PlaylistSong({ url }: any) {
       },
       body: JSON.stringify({
         url,
-        data,
+        data: dataWithColors,
       }),
     });
     if (response.status === 200 || response.status === 303) {
