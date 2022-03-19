@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { ReactElement, useEffect } from "react";
-import HomeButton from "../../../components/HomeButton";
 import LibraryLayout from "../../../components/layouts/LibraryLayout";
 import WideSong from "../../../components/Songs/WideSong";
 import { getPrismaPool } from "../../../server_helpers/prismaPool";
@@ -49,6 +48,9 @@ export async function getStaticProps({ req, res, params }: any) {
       title: true,
       artist: true,
       songs: {
+        where: {
+          complete: true,
+        },
         include: {
           album: {
             select: {
