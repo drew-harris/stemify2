@@ -6,12 +6,8 @@ export default function Song({ data, limit }: any) {
   const { queueSongs, setQueueSongs, isUploading } = useContext(queueContext);
   const [added, setAdded] = useState(queueSongs.includes(data));
 
-  useEffect(() => {
-    setAdded(queueSongs.includes(data));
-  }, [queueSongs, data]);
-
   const add = () => {
-    if (!added) {
+    if (!queueSongs.includes(data)) {
       setQueueSongs([...queueSongs, data]);
     } else {
       setQueueSongs(queueSongs.filter((song: any) => song.id !== data.id));
@@ -42,10 +38,10 @@ export default function Song({ data, limit }: any) {
         <button
           onClick={add}
           className={`rounded ${
-            added ? "bg-tan-500" : "bg-tan-400"
+            queueSongs.includes(data) ? "bg-tan-500" : "bg-tan-400"
           }  text-white p-1 px-2 sm:block hidden ml-2 font-semibold hover:shadow-md hover:scale-105 transition-transform `}
         >
-          {added ? "ADDED" : "ADD"}
+          {queueSongs.includes(data) ? "ADDED" : "ADD"}
         </button>
       ) : null}
     </div>
