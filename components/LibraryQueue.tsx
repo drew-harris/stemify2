@@ -63,8 +63,6 @@ export default function LibraryQueue(props: any) {
       await sdk.upload(t, (uploadInfo: any) => {
         setSongMessage(Math.round(uploadInfo.total * 100) + "%");
       });
-      await sdk.disconnect();
-
       return 1;
     } catch (error) {
       console.error(error);
