@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { prisma } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getPrismaPool } from "../../../../server_helpers/prismaPool";
 
@@ -45,7 +43,17 @@ export default async function handler(
 
       ticket = await prisma.ticket.findFirst({
         where: { complete: false, started: null },
-        orderBy: { createdAt: "desc" },
+        // Created at oldest time
+        orderBy: { createdAt: "asc" },
+
+        include: {
+          song: {
+            include: {
+              artist: true,
+              album: true,
+            },
+          },
+        },
       });
 
       if (ticket) {
