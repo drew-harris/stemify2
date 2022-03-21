@@ -2,7 +2,7 @@ import Link from "next/link";
 export default function HomeButton() {
   return (
     <Link href="/">
-      <div className="w-6 h-6 m-5 overflow-hidden cursor-pointer">
+      <div className="w-6 h-6 mt-5 ml-5 overflow-hidden cursor-pointer ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="fill-tan-500"

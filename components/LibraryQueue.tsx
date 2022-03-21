@@ -92,7 +92,7 @@ export default function LibraryQueue(props: any) {
     setSongMessage("");
   };
   return (
-    <div className="sticky hidden sm:flex flex-col justify-between transition-shadow max-h-[80vh] top-20 sm:p-3 hover:shadow-md bg-tan-100 rounded-xl ">
+    <div className="sticky hidden sm:flex flex-col justify-between transition-shadow h-[80vh] top-20 sm:p-3 hover:shadow-md bg-tan-100 rounded-xl ">
       <div className="p-1 text-lg font-semibold text-center text-tan-400">
         UPLOAD QUEUE
       </div>
