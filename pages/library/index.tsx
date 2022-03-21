@@ -1,17 +1,15 @@
-import { ReactElement, useEffect } from "react";
-import { getPrismaPool } from "../../server_helpers/prismaPool";
+import { ReactElement, useEffect, useState } from "react";
 import LibraryLayout from "../../components/layouts/LibraryLayout";
 import Head from "next/head";
-import Song from "../../components/Songs/Song";
+import SongContainer from "../../components/LibraryContainers/SongContainer";
 
-function Home({ songs }: any) {
+import { getPrismaPool } from "../../server_helpers/prismaPool";
+
+function Home({ initialData }: any) {
+  const [data, setData] = useState(initialData);
   useEffect(() => {
-    console.log(songs);
-  }, [songs]);
-
-  const songComponents = songs.map((song: any) => (
-    <Song data={song} key={song.id} />
-  ));
+    console.log(data);
+  }, [data]);
 
   return (
     <div>
@@ -19,10 +17,7 @@ function Home({ songs }: any) {
         <title>LIBRARY</title>
       </Head>
       <div className="mx-auto text-2xl font-bold text-center ">LIBRARY</div>
-
-      <div className="grid items-stretch gap-4 p-3 lg:grid-cols-3 sm:grid-cols-2 justify-items-stretch sm:p-9 ">
-        {songComponents}
-      </div>
+      <SongContainer data={data} />
     </div>
   );
 }
@@ -39,10 +34,11 @@ export default Home;
 
 export async function getStaticProps({ req, res }: any) {
   const prisma = getPrismaPool();
-  const songs = await prisma.song.findMany({
+  const initialData = await prisma.song.findMany({
     where: {
       complete: true,
     },
+    take: 60,
     orderBy: {
       submittedAt: "desc",
     },
@@ -54,7 +50,7 @@ export async function getStaticProps({ req, res }: any) {
 
   return {
     props: {
-      songs,
+      initialData,
     },
     revalidate: 100,
   };
