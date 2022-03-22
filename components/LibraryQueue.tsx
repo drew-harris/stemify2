@@ -37,7 +37,6 @@ export default function LibraryQueue(props: any) {
     async function init() {
       // @ts-ignore haha deal with it later
       sdk = await import("stem-player-sdk");
-      console.log(sdk);
     }
     init();
   }, []);

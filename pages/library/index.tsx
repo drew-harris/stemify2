@@ -6,6 +6,8 @@ import { PropagateLoader } from "react-spinners";
 
 import { getPrismaPool } from "../../server_helpers/prismaPool";
 import PageSwitcher from "../../components/PageSwitcher";
+import LibraryQueryControls from "../../components/LibraryQueryControls";
+import AlbumContainer from "../../components/Albums/AlbumContainer";
 
 function Home({ initialData }: any) {
   const [data, setData] = useState(initialData);
@@ -62,6 +64,15 @@ function Home({ initialData }: any) {
     });
   };
 
+  let fetchContainer: ReactElement;
+  if (fetchConfig.fetchType === "songs") {
+    fetchContainer = <SongContainer data={data} />;
+  } else if (fetchConfig.fetchType === "albums") {
+    fetchContainer = <AlbumContainer data={data} />;
+  } else {
+    fetchContainer = <div>No container</div>;
+  }
+
   return (
     <div>
       <Head>
@@ -70,6 +81,7 @@ function Home({ initialData }: any) {
       <div className="mx-auto text-xl font-bold text-center">LIBRARY</div>
 
       <div className="p-3 pt-0 sm:p-9 ">
+        <LibraryQueryControls config={fetchConfig} setConfig={setFetchConfig} />
         {fetching ? (
           <div
             className="flex items-center justify-center"
@@ -80,9 +92,7 @@ function Home({ initialData }: any) {
             <PropagateLoader color={"#544738"} />
           </div>
         ) : (
-          <div ref={ref}>
-            <SongContainer data={data} />
-          </div>
+          <div ref={ref}>{fetchContainer}</div>
         )}
         <PageSwitcher page={fetchConfig.page} setPage={setPage} />
       </div>

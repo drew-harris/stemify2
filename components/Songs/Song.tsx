@@ -4,15 +4,23 @@ import Link from "next/link";
 import { queueContext } from "../layouts/LibraryLayout";
 export default function Song({ data, limit }: any) {
   const { queueSongs, setQueueSongs, isUploading } = useContext(queueContext);
-  const [added, setAdded] = useState(queueSongs.includes(data));
+  const [added, setAdded] = useState(
+    queueSongs.filter((song: any) => song.id === data.id).length > 0
+  );
 
   const add = () => {
-    if (!queueSongs.includes(data)) {
+    if (!added) {
       setQueueSongs([...queueSongs, data]);
+      setAdded(true);
     } else {
       setQueueSongs(queueSongs.filter((song: any) => song.id !== data.id));
+      setAdded(false);
     }
   };
+
+  useEffect(() => {
+    setAdded(queueSongs.filter((song: any) => song.id === data.id).length > 0);
+  }, [queueSongs, data.id]);
   return (
     <div className="flex flex-row items-center justify-between p-2 overflow-hidden transition-shadow bg-white shadow-sm sm:4 rounded-xl hover:shadow-md">
       <div className="flex flex-row items-center truncate text-ellipsis ">
@@ -38,10 +46,10 @@ export default function Song({ data, limit }: any) {
         <button
           onClick={add}
           className={`rounded ${
-            queueSongs.includes(data) ? "bg-tan-500" : "bg-tan-400"
+            added ? "bg-tan-500" : "bg-tan-400"
           }  text-white p-1 px-2 sm:block hidden ml-2 font-semibold hover:shadow-md hover:scale-105 transition-transform `}
         >
-          {queueSongs.includes(data) ? "ADDED" : "ADD"}
+          {added ? "ADDED" : "ADD"}
         </button>
       ) : null}
     </div>
