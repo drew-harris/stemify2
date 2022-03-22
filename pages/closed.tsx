@@ -11,6 +11,7 @@ export default function Closed() {
         date={config.releaseDate + 3000}
         onComplete={() => location.reload()}
       /> */}
+      STEMIFY
     </div>
   );
 }
