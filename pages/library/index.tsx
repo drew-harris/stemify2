@@ -18,6 +18,8 @@ function Home({ initialData }: any) {
     limit: 60,
     page: 1,
     fetchType: "songs",
+    sort: "date",
+    query: "",
   });
 
   const [height, setHeight] = useState(0);
@@ -38,16 +40,30 @@ function Home({ initialData }: any) {
       console.log("fetching data");
       setFetching(true);
       let limit = 24;
-      const response = await fetch(
-        `/api/${fetchConfig.fetchType}/?` +
-          new URLSearchParams({
-            page: fetchConfig.page.toString(),
-            limit: limit.toString(),
-            sort: "date",
-          })
-      );
+      let response: any;
+      if (fetchConfig.query.length > 0) {
+        console.log("SEARCHING WITH ", fetchConfig.query);
+        response = await fetch(
+          `/api/${fetchConfig.fetchType}/search/?` +
+            new URLSearchParams({
+              page: fetchConfig.page.toString(),
+              limit: limit.toString(),
+              query: fetchConfig.query,
+            })
+        );
+      } else {
+        response = await fetch(
+          `/api/${fetchConfig.fetchType}/?` +
+            new URLSearchParams({
+              page: fetchConfig.page.toString(),
+              limit: limit.toString(),
+              sort: fetchConfig.sort,
+            })
+        );
+      }
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         setData(data);
         setFetching(false);
       }
@@ -97,7 +113,11 @@ function Home({ initialData }: any) {
         ) : (
           <div ref={ref}>{fetchContainer}</div>
         )}
-        <PageSwitcher page={fetchConfig.page} setPage={setPage} />
+        <PageSwitcher
+          search={fetchConfig.query}
+          page={fetchConfig.page}
+          setPage={setPage}
+        />
       </div>
     </div>
   );

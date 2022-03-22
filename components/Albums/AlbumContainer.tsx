@@ -4,7 +4,7 @@ export default function AlbumContainer({ data }: any) {
   const albumElements = data.map((song: any) => (
     <Album data={song} key={song.id} />
   ));
-  if (!data[0].artist) {
+  if (!data[0]?.artist) {
     return null;
   }
   return (

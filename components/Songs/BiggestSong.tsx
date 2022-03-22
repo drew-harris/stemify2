@@ -107,18 +107,21 @@ export default function BiggestSong({ songData }: any) {
       </div>
       <div className="mt-6 BOTTOM">
         {uploading ? songMessage : null}
-        <button
-          onClick={upload}
-          className="w-full p-1 px-2 font-semibold text-white transition-transform rounded-lg bg-tan-400 hover:shadow-md"
-        >
-          UPLOAD
-        </button>
-        <button
-          onClick={cancelUpload}
-          className="w-full p-1 px-2 font-semibold text-white transition-transform rounded-lg bg-tan-400 hover:shadow-md"
-        >
-          CANCEL
-        </button>
+        {!uploading ? (
+          <button
+            onClick={upload}
+            className="w-full p-1 px-2 font-semibold text-white transition-transform rounded-lg bg-tan-400 hover:shadow-md"
+          >
+            UPLOAD
+          </button>
+        ) : (
+          <button
+            onClick={cancelUpload}
+            className="w-full p-1 px-2 font-semibold text-white transition-transform rounded-lg bg-tan-400 hover:shadow-md"
+          >
+            CANCEL
+          </button>
+        )}
       </div>
     </div>
   );

@@ -1,10 +1,24 @@
+import { useRef, useState } from "react";
+import { DebounceInput } from "react-debounce-input";
+
 export default function LibraryQueryControls({ config, setConfig }: any) {
+  const inputEl: any = useRef(null);
   const setQueryType = (queryType: string) => {
     setConfig({
       ...config,
       page: 0,
       fetchType: queryType,
     });
+  };
+
+  const getDisplayValue = (value: any) => {
+    if (value == "date") {
+      return "Recent";
+    } else if (value == "poularity") {
+      return "Popular";
+    } else if (value == "downloads") {
+      return "Downloads";
+    }
   };
 
   const activeClass: string =
@@ -41,6 +55,40 @@ export default function LibraryQueryControls({ config, setConfig }: any) {
         >
           Artists
         </button>
+      </div>
+      {/* Sort */}
+      <div className="flex gap-3">
+        <DebounceInput
+          minLength={3}
+          itemRef={inputEl}
+          debounceTimeout={500}
+          className="px-3 py-1 text-center text-black transition-shadow rounded-lg shadow-sm disabled:bg-white accent-tan-500 focus:shadow-lg border-tan-500 "
+          placeholder="SEARCH"
+          onChange={(e) => {
+            console.log(e.target.value);
+            setConfig({
+              ...config,
+              query: e.target.value,
+            });
+          }}
+        ></DebounceInput>
+        <select
+          className="p-1 px-2 transition-transform bg-white rounded-lg sm:block hover:shadow-md"
+          onChange={() => {
+            setConfig({
+              ...config,
+              page: 0,
+              sort: (document.getElementById("sort") as HTMLSelectElement)
+                .value,
+            });
+          }}
+          id="sort"
+          value={config.sort}
+        >
+          <option value="date">Recent</option>
+          <option value="popularity">Popular</option>
+          <option value="downloads">Downloads</option>
+        </select>
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-export default function PageSwitcher({ page, setPage }: any) {
+export default function PageSwitcher({ page, setPage, search }: any) {
+  if (search.length > 0) {
+    return null;
+  }
   return (
     <div className="flex justify-between mt-4 ">
       {page > 0 ? (

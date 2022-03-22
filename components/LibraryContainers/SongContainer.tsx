@@ -6,7 +6,7 @@ export default function SongContainer({ data }: any) {
   ));
 
   // Important for switching back and forth between album, song and page
-  if (!data[0].album) {
+  if (!data || !data[0]?.album) {
     return null;
   }
   return (

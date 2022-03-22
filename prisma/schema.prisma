@@ -68,6 +68,7 @@ model Album {
   createdAt  DateTime @default(now())
   artist     Artist   @relation(fields: [artistId], references: [id])
   artistId   String
+  downloads  Int      @default(0)
 
   @@fulltext([title])
 }
