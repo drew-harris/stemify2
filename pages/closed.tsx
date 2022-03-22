@@ -7,10 +7,10 @@ export default function Closed() {
       <Head>
         <title>STEMIFY</title>
       </Head>
-      <Countdown
+      {/* <Countdown
         date={config.releaseDate + 3000}
         onComplete={() => location.reload()}
-      />
+      /> */}
     </div>
   );
 }
