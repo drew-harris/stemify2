@@ -65,6 +65,9 @@ export async function getStaticProps({ params }: any) {
       image: true,
       name: true,
       albums: {
+        orderBy: {
+          popularity: "desc",
+        },
         select: {
           id: true,
           title: true,

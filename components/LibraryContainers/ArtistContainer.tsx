@@ -1,8 +1,7 @@
-import Artist from "../Artist";
-
+import ArtistInLibrary from "../Artist";
 export default function ArtistContainer({ data }: any) {
   const artistComponents = data.map((song: any) => (
-    <Artist data={song} key={song.id} />
+    <ArtistInLibrary data={song} key={song.id} />
   ));
 
   // Important for switching back and forth between album, song and page

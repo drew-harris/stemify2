@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-export default function Album({ data, limit }: any) {
+export default function ArtistInLibrary({ data, limit }: any) {
   useEffect(() => {
     console.log(data);
   });
@@ -23,8 +23,10 @@ export default function Album({ data, limit }: any) {
           )}
         </div>
         <div className="text-black truncate shrink">
-          <Link href={`/library/album/${data.id}`} passHref={true}>
-            <a className="font-semibold truncate text-ellipsis">{data.name}</a>
+          <Link href={`/library/artist/${data.id}`} passHref={true}>
+            <a className="font-semibold truncate hover:underline text-ellipsis">
+              {data.name}
+            </a>
           </Link>
         </div>
       </div>

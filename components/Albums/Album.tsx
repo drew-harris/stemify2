@@ -26,7 +26,7 @@ export function Album({ album, embedded = false }: any) {
       "relative w-8 h-8 mr-2 overflow-hidden rounded-md sm:w-16 sm:h-16 shrink-0 sm:mr-4";
   }
   return (
-    <>
+    <div className={embedded ? "mb-8" : ""}>
       <div className="flex items-end info">
         <div className={imageClass}>
           <Image
@@ -79,6 +79,6 @@ export function Album({ album, embedded = false }: any) {
         </div>
       </div>
       <div className="mt-4 bg-white rounded-md">{songComponents}</div>
-    </>
+    </div>
   );
 }

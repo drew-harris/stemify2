@@ -24,9 +24,15 @@ export default function AlbumInLibrary({ data, limit }: any) {
         </div>
         <div className="text-black truncate shrink">
           <Link href={`/library/album/${data.id}`} passHref={true}>
-            <a className="font-semibold truncate text-ellipsis">{data.title}</a>
+            <a className="font-semibold truncate hover:underline text-ellipsis">
+              {data.title}
+            </a>
           </Link>
-          <div className="font-medium">{data.artist.name}</div>
+          <Link href={`/library/artist/${data.artist.id}`} passHref={true}>
+            <a className="block font-medium cursor-pointer hover:underline">
+              {data.artist.name}
+            </a>
+          </Link>
         </div>
       </div>
     </div>
