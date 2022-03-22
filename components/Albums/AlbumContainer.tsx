@@ -1,8 +1,8 @@
-import Album from "./Album";
+import AlbumInLibrary from "./AlbumInLibrary";
 
 export default function AlbumContainer({ data }: any) {
   const albumElements = data.map((song: any) => (
-    <Album data={song} key={song.id} />
+    <AlbumInLibrary data={song} key={song.id} />
   ));
   if (!data[0]?.artist) {
     return null;

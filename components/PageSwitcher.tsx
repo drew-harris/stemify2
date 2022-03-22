@@ -8,7 +8,7 @@ export default function PageSwitcher({ page, setPage, search }: any) {
     <div className="flex justify-between mt-4 ">
       {page > 0 ? (
         <button
-          className="px-4 py-2 font-bold border border-2 rounded border-tan-400 hover:text-white hover:bg-tan-400 "
+          className="px-4 py-2 font-bold border-2 rounded border-tan-400 hover:text-white hover:bg-tan-400 "
           onClick={() => setPage(page - 1)}
         >
           <FontAwesomeIcon icon={faAngleLeft} />

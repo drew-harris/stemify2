@@ -19,12 +19,14 @@ export default function WideSong({ data, showTrackNumber = false }: any) {
     }
   };
   return (
-    <div className="flex flex-row items-center justify-between p-2 overflow-hidden transition-shadow bg-white shadow-sm sm:4 rounded-xl hover:shadow-md">
-      <div className="flex flex-row items-center truncate text-ellipsis ">
-        Test
+    <div className="flex flex-row items-center justify-between p-2 pl-4 overflow-hidden transition-shadow border-b shadow-sm shadow- border-tan-300 sm:4 hover:shadow-md">
+      <div className="flex items-baseline gap-4">
         {showTrackNumber && (
-          <div className="text-sm text-gray-600">{data.track_number}</div>
+          <div className="text-sm text-gray-600">{data.trackNum}</div>
         )}
+        <div className="flex flex-row items-center truncate text-ellipsis ">
+          {data.title}
+        </div>
       </div>
       {!isUploading ? (
         <button
