@@ -8,6 +8,7 @@ import { getPrismaPool } from "../../server_helpers/prismaPool";
 import PageSwitcher from "../../components/PageSwitcher";
 import LibraryQueryControls from "../../components/LibraryQueryControls";
 import AlbumContainer from "../../components/Albums/AlbumContainer";
+import ArtistContainer from "../../components/LibraryContainers/ArtistContainer";
 
 function Home({ initialData }: any) {
   const [data, setData] = useState(initialData);
@@ -69,8 +70,10 @@ function Home({ initialData }: any) {
     fetchContainer = <SongContainer data={data} />;
   } else if (fetchConfig.fetchType === "albums") {
     fetchContainer = <AlbumContainer data={data} />;
+  } else if (fetchConfig.fetchType === "artists") {
+    fetchContainer = <ArtistContainer data={data} />;
   } else {
-    fetchContainer = <div>No container</div>;
+    fetchContainer = <div>No data</div>;
   }
 
   return (

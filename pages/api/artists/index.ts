@@ -37,7 +37,7 @@ export default async function handler(
     try {
       const prisma: PrismaClient = await getPrismaPool();
 
-      const songs = await prisma.album.findMany({
+      const data = await prisma.artist.findMany({
         where: {
           songs: {
             some: {
@@ -50,12 +50,9 @@ export default async function handler(
         orderBy: {
           [sort]: order,
         },
-        include: {
-          artist: true,
-        },
       });
 
-      res.status(200).json(songs);
+      res.status(200).json(data);
     } catch (error) {
       console.error(error);
       res.status(500).json({ msg: "Internal server error" });

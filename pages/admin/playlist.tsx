@@ -75,7 +75,7 @@ function PlaylistSong({ url }: any) {
   return (
     <div className="flex flex-row items-center justify-between p-2 overflow-hidden transition-shadow bg-white shadow-sm sm:4 rounded-xl hover:shadow-md">
       <div className="flex flex-row items-center truncate text-ellipsis ">
-        <div className="relative w-8 h-8 mr-2 overflow-hidden sm:w-12 sm:h-12 shrink-0 rounded-2xl sm:mr-4">
+        <div className="relative w-8 h-8 mr-2 overflow-hidden sm:w-12 sm:h-12 shrink-0 rounded-xl sm:mr-4">
           {data.album.image && data.album.title ? (
             <Image
               layout="fill"

@@ -11,7 +11,7 @@ export default function Album({ data, limit }: any) {
   return (
     <div className="flex flex-row items-center justify-between p-2 overflow-hidden transition-shadow bg-white shadow-sm sm:4 rounded-xl hover:shadow-md">
       <div className="flex flex-row items-center truncate text-ellipsis ">
-        <div className="relative w-8 h-8 mr-2 overflow-hidden sm:w-12 sm:h-12 shrink-0 rounded-xl sm:mr-4">
+        <div className="relative w-8 h-8 mr-2 overflow-hidden rounded-full sm:w-14 sm:h-14 shrink-0 sm:mr-4">
           {data.image && (
             <Image
               layout="fill"
@@ -24,9 +24,8 @@ export default function Album({ data, limit }: any) {
         </div>
         <div className="text-black truncate shrink">
           <Link href={`/library/album/${data.id}`} passHref={true}>
-            <a className="font-semibold truncate text-ellipsis">{data.title}</a>
+            <a className="font-semibold truncate text-ellipsis">{data.name}</a>
           </Link>
-          <div className="font-medium">{data.artist.name}</div>
         </div>
       </div>
     </div>
