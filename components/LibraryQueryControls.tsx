@@ -28,8 +28,8 @@ export default function LibraryQueryControls({ config, setConfig }: any) {
     "p-1 px-2 font-semibold text-tan-400 transition-transform rounded-lg sm:block ";
 
   return (
-    <div className="flex justify-between pb-3 ">
-      <div className="flex gap-4 switcher">
+    <div className="flex flex-col justify-between gap-4 pb-3 mt-3 md:flex-row md:gap-0">
+      <div className="flex flex-col md:gap-4 switcher md:flex-row">
         <button
           className={config.fetchType === "songs" ? activeClass : inactiveClass}
           onClick={() => setQueryType("songs")}
@@ -57,13 +57,13 @@ export default function LibraryQueryControls({ config, setConfig }: any) {
         </button>
       </div>
       {/* Sort */}
-      <div className="flex gap-3">
+      <div className="flex flex-col gap-3 md:flex-row">
         <DebounceInput
           minLength={3}
           itemRef={inputEl}
           debounceTimeout={500}
           className="px-3 py-1 text-center text-black transition-shadow rounded-lg shadow-sm disabled:bg-white accent-tan-500 focus:shadow-lg border-tan-500 "
-          placeholder="SEARCH"
+          placeholder="Search"
           onChange={(e) => {
             console.log(e.target.value);
             setConfig({
