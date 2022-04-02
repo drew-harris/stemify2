@@ -8,11 +8,13 @@ export default function Closed() {
       <Head>
         <title>STEMIFY</title>
       </Head>
-      <Countdown
-        date={config.releaseDate + 3000}
-        onComplete={() => location.reload()}
-      />
-      STEMIFY
+      <div className="flex flex-col items-center font-semibold gap-14">
+        STEMIFY
+        <Countdown
+          date={config.releaseDate + 3000}
+          onComplete={() => location.reload()}
+        />
+      </div>
     </div>
   );
 }
