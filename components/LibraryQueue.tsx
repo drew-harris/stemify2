@@ -60,7 +60,9 @@ export default function LibraryQueue(props: any) {
       await sdk.connect();
       const t = await sdk.generateTrack(track);
       await sdk.upload(t, (uploadInfo: any) => {
-        setSongMessage(Math.round(uploadInfo.total * 100) + "%");
+        if (uploadInfo.total <= 1) {
+          setSongMessage(Math.round(uploadInfo.total * 100) + "%");
+        }
       });
       return 1;
     } catch (error) {
