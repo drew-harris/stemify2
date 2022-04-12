@@ -10,10 +10,12 @@ export default function Closed() {
       </Head>
       <div className="flex flex-col items-center font-semibold gap-14">
         STEMIFY
-        <Countdown
+        <br />
+        COMING SOON
+        {/* <Countdown
           date={config.releaseDate + 3000}
           onComplete={() => location.reload()}
-        />
+        /> */}
       </div>
     </div>
   );
