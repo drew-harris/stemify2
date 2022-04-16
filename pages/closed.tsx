@@ -8,7 +8,7 @@ export default function Closed() {
       <Head>
         <title>STEMIFY</title>
       </Head>
-      <div className="flex flex-col items-center font-semibold gap-14">
+      <div className="flex flex-col items-center font-semibold text-center gap-14">
         STEMIFY
         <br />
         COMING SOON
