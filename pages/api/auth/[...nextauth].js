@@ -20,6 +20,7 @@ export default NextAuth({
   callbacks: {
     async session({ session, user }) {
       session.user.level = user.level;
+      session.user.id = user.id;
       return session;
     },
   },

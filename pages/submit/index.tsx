@@ -1,73 +1,24 @@
-import { useRef, useState } from "react";
-import { DebounceInput } from "react-debounce-input";
-import { PropagateLoader } from "react-spinners";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { prisma } from "@prisma/client";
 import { getSession, signIn, useSession } from "next-auth/react";
-import Link from "next/link";
 import Head from "next/head";
-import BigSong from "../../components/Songs/BigSong";
-import { faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { useEffect, useState } from "react";
+import Status from "../../components/Submit/Status";
+import Submit from "../../components/Submit/Submit";
+import { getPrismaPool } from "../../server_helpers/prismaPool";
 
-export default function SubmitPage({ session }: any) {
-  const [inputLink, setInputLink] = useState("");
-  const [choices, setChoices] = useState([]);
-  const [choicesLoading, setChoicesLoading] = useState(false);
+export default function SubmitPage({ session, songs, queuePosition }: any) {
+  const [viewId, setViewId] = useState("");
 
-  const [colors, setColors] = useState(["#FF0000", "#0000FF"]);
+  useEffect(() => {
+    window.localStorage.setItem("viewId", "TEST");
+  }, [viewId]);
 
-  const inputEl: any = useRef(null);
+  useEffect(() => {
+    console.log(songs);
+  }, []);
 
-  const getChoices = async (url: string) => {
-    try {
-      setChoicesLoading(true);
-      setChoices([]);
-      const response = await fetch("/api/youtube", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url: url, limit: 1 }),
-      });
-      const data = await response.json();
-      console.log(data);
-      setChoices(data);
-      setChoicesLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const submit = async () => {
-    try {
-      const song: any = choices[0];
-
-      song.innerColor = colors[0];
-      song.outerColor = colors[1];
-
-      // Reset
-      setChoices([]);
-      setChoicesLoading(true);
-
-      const url = inputLink;
-      setInputLink("");
-
-      const response = await fetch("/api/tickets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          url,
-          data: song,
-        }),
-      });
-      const data = await response.json();
-      console.log(data);
-      setChoicesLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
+  const printViewId = () => {
+    console.log(viewId);
   };
 
   const head = (
@@ -96,64 +47,14 @@ export default function SubmitPage({ session }: any) {
   }
 
   return (
-    <div>
+    <>
       {head}
-      <div className="flex justify-between">
-        <Link href="/">
-          <div className="m-5 cursor-pointer">
-            <FontAwesomeIcon size="lg" icon={faHouse} />
-          </div>
-        </Link>
-        <a href="https://music.youtube.com/" target="_blank" rel="noreferrer">
-          <div className="m-5 cursor-pointer text-tan-400">
-            {/*
-    // @ts-ignore */}
-            <FontAwesomeIcon size="lg" icon={faYoutube} />
-          </div>
-        </a>
-      </div>
-      <div className="flex flex-col items-center gap-4 p-4 mt-24 text-center sm:p-9 PAGE">
-        <DebounceInput
-          minLength={3}
-          itemRef={inputEl}
-          debounceTimeout={500}
-          className="px-3 py-1 disabled:bg-white text-black transition-shadow shadow-sm w-auto text-center sm:w-[26rem] accent-tan-500 rounded-xl focus:shadow-lg border-tan-500 placeholder:text-tan-200"
-          placeholder="YOUTUBE LINK"
-          disabled={choicesLoading}
-          value={inputLink}
-          onChange={(e) => {
-            getChoices(e.target.value);
-            setInputLink(e.target.value);
-          }}
-        ></DebounceInput>
-        {choicesLoading && (
-          <div className="mt-24">
-            <PropagateLoader color={"#544738"} loading={choicesLoading} />
-          </div>
-        )}
-        {choices.length > 0 ? (
-          <div className="flex flex-row items-center justify-center gap-4 pt-8 mx-auto mb-10">
-            {choices.map((choice: any) => (
-              <BigSong
-                songData={choice}
-                setColors={setColors}
-                width="auto"
-                key={choice.id}
-              />
-            ))}
-          </div>
-        ) : null}
-
-        {choices.length > 0 ? (
-          <button
-            className="p-1 px-2 ml-2 font-semibold text-white rounded-xl first-letter:transition-transform bg-tan-400 hover:shadow-md hover:scale-105"
-            onClick={submit}
-          >
-            SUBMIT
-          </button>
-        ) : null}
-      </div>
-    </div>
+      {viewId != songs[0].id && songs[0].complete ? (
+        <Submit />
+      ) : (
+        <Status song={songs[0]} queuePosition={queuePosition}></Status>
+      )}
+    </>
   );
 }
 
@@ -163,13 +64,57 @@ export async function getServerSideProps(context: any) {
     return {
       props: {
         session: null,
+        songs: null,
       },
     };
   }
 
+  console.log(session.user);
+  const client = getPrismaPool();
+  const songs = await client.song.findMany({
+    where: {
+      user: {
+        id: session.user.id,
+      },
+    },
+    orderBy: {
+      submittedAt: "desc",
+    },
+    take: 1,
+    select: {
+      id: true,
+      title: true,
+      artist: true,
+      album: true,
+      previewUrl: true,
+      submittedAt: true,
+      complete: true,
+    },
+  });
+
+  let queuePosition = 0;
+
+  if (!songs[0].complete) {
+    //count songs submitted before this one
+    const count = await client.song.count({
+      where: {
+        submittedAt: {
+          lt: songs[0].submittedAt,
+        },
+        complete: false,
+      },
+    });
+
+    queuePosition = count + 1;
+  }
+
+  console.log(songs);
+
   return {
     props: {
       session,
+      songs,
+      queuePosition,
     },
   };
 }

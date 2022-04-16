@@ -74,7 +74,8 @@ export async function createSong(
       approved: false,
       complete: false,
     },
-    include: {
+    select: {
+      id: true,
       ticket: {
         select: {
           id: true,
