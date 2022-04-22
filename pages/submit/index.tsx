@@ -1,5 +1,4 @@
-import { prisma } from "@prisma/client";
-import { getSession, signIn, useSession } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Status from "../../components/Submit/Status";
@@ -8,17 +7,32 @@ import { getPrismaPool } from "../../server_helpers/prismaPool";
 
 export default function SubmitPage({ session, songs, queuePosition }: any) {
   const [viewId, setViewId] = useState("");
+  const [songList, setSongs] = useState(songs);
+  const [queuePos, setQueuePos] = useState(queuePosition);
 
   useEffect(() => {
-    window.localStorage.setItem("viewId", "TEST");
+    setViewId(window.localStorage.getItem("viewId") || "");
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("viewId", viewId);
   }, [viewId]);
 
   useEffect(() => {
-    console.log(songs);
+    console.log(songList);
   }, []);
 
-  const printViewId = () => {
-    console.log(viewId);
+  const recieveSubmit = (song: any, queuePosition: number) => {
+    console.log("RECIEVED SUBMIT: ", song);
+    setViewId(window.localStorage.getItem("viewId") || "");
+    setSongs([song]);
+    setQueuePos(queuePosition);
+  };
+
+  const submitAnother = () => {
+    setViewId("");
+    setSongs([]);
+    setQueuePos(0);
   };
 
   const head = (
@@ -49,10 +63,15 @@ export default function SubmitPage({ session, songs, queuePosition }: any) {
   return (
     <>
       {head}
-      {viewId != songs[0].id && songs[0].complete ? (
-        <Submit />
+      {songList.length < 1 ||
+      (viewId != songList[0].id && songList[0].complete) ? (
+        <Submit onSubmitted={recieveSubmit} />
       ) : (
-        <Status song={songs[0]} queuePosition={queuePosition}></Status>
+        <Status
+          song={songList[0]}
+          queuePosition={queuePos}
+          submitAnother={submitAnother}
+        ></Status>
       )}
     </>
   );
@@ -80,7 +99,7 @@ export async function getServerSideProps(context: any) {
     orderBy: {
       submittedAt: "desc",
     },
-    take: 1,
+    take: 6,
     select: {
       id: true,
       title: true,

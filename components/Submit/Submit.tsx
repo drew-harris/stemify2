@@ -3,13 +3,11 @@ import { DebounceInput } from "react-debounce-input";
 import { PropagateLoader } from "react-spinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { getSession, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import Head from "next/head";
 import BigSong from "../Songs/BigSong";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 
-export default function SubmitPage({ session }: any) {
+export default function SubmitPage({ session, onSubmitted }: any) {
   const [inputLink, setInputLink] = useState("");
   const [choices, setChoices] = useState([]);
   const [choicesLoading, setChoicesLoading] = useState(false);
@@ -65,6 +63,8 @@ export default function SubmitPage({ session }: any) {
       const data = await response.json();
       console.log(data);
       setChoicesLoading(false);
+      window.localStorage.setItem("viewId", data.song.id);
+      onSubmitted(data.song, data.queuePosition);
     } catch (error) {
       console.error(error);
     }

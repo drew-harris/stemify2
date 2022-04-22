@@ -11,7 +11,7 @@ import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import QueueSong from "../Songs/QueueSong";
 import StatusSong from "../Songs/StatusSong";
 
-export default function Status({ song, queuePosition }: any) {
+export default function Status({ song, queuePosition, submitAnother }: any) {
   useEffect(() => {
     console.log("THIS IS THE SONGS", song);
   }, []);
@@ -30,7 +30,7 @@ export default function Status({ song, queuePosition }: any) {
         {!song.complete ? (
           "You are in queue position " + queuePosition
         ) : (
-          <button>Submit Another</button>
+          <button onClick={submitAnother}>Submit Another</button>
         )}
       </div>
     </div>
