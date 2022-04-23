@@ -129,14 +129,17 @@ export async function getServerSideProps(context: any) {
 
   let queuePosition = 0;
 
-  const count = await client.song.count({
-    where: {
-      submittedAt: {
-        lt: songs[0].submittedAt,
+  let count = 0;
+  if (songs.length > 0) {
+    count = await client.song.count({
+      where: {
+        submittedAt: {
+          lt: songs[0].submittedAt,
+        },
+        complete: false,
       },
-      complete: false,
-    },
-  });
+    });
+  }
 
   queuePosition = count + 1;
 
