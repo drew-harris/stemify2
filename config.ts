@@ -1,5 +1,5 @@
 const config = {
-  releaseDate: 1650755700000,
+  releaseDate: 165075570000,
   maxSubmitedSongs: 1,
 };
 

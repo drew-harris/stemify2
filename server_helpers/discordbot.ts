@@ -1,6 +1,6 @@
 // Discord js bot singleton
 
-import { Client } from "discord.js";
+import { Client, TextChannel } from "discord.js";
 
 let _client: any = new Client();
 let clientReady = false;
@@ -31,6 +31,19 @@ export async function sendDiscordDM(userId: string, embed: object) {
     const dm = await user.createDM();
     // Create embed
     await dm.send({ embed });
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+}
+
+export async function sendAnnouncement(message: string) {
+  try {
+    const client = await getClient();
+    const channel = (await client.channels.fetch(
+      "944738592905908304"
+    )) as TextChannel;
+    channel.send(message);
   } catch (error) {
     console.log(error);
     return;
