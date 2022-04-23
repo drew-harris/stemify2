@@ -1,18 +1,15 @@
 import Image from "next/image";
-import { useEffect } from "react";
-import { usePalette } from "react-palette";
+import Link from "next/link";
 
 export default function StatusSong({ songData, width = 96 }: any) {
-  const { data, loading, error } = usePalette(songData.album.image);
-
   return (
     <div
-      className={`flex flex-row  items-center justify-between p-4 overflow-hidden text-sm sm:text-lg text-center sm:text-left transition-shadow bg-white shadow-sm sm:w-${width} text-tan-700 rounded-xl hover:shadow-md`}
+      className={`flex flex-row items-center justify-between p-2  overflow-hidden   text-left transition-shadow bg-white shadow-sm  text-tan-700 rounded-xl hover:shadow-md`}
     >
       <div className="flex flex-row items-center ">
-        <div className="relative mr-4 overflow-hidden rounded-lg w-14 h-14 sm:w-28 sm:h-28 shrink-0 md:mr-4">
+        <div className="relative w-8 h-8 mr-2 overflow-hidden rounded-lg sm:w-10 sm:h-10 shrink-0 ">
           <Image
-            quality={80}
+            quality={30}
             layout="fill"
             src={songData.album.image}
             alt={"Album Art for " + songData.album.title}
@@ -21,10 +18,17 @@ export default function StatusSong({ songData, width = 96 }: any) {
         <div className="">
           <div className="font-semibold">{songData.title}</div>
           <div className="font-medium">{songData.artist.name}</div>
-          <div className="font-normal ">{songData.album.title}</div>
-          <div className="flex justify-center gap-4 mt-2 sm:justify-start"></div>
         </div>
       </div>
+      {songData.complete ? (
+        <Link href={`/song/${songData.id}`} passHref={true}>
+          <button className="hidden p-1 px-2 ml-2 font-semibold text-white transition-transform rounded bg-tan-400 sm:block hover:shadow-md hover:scale-105 ">
+            VIEW
+          </button>
+        </Link>
+      ) : (
+        <div className="font-semibold text-tan-400">In Queue</div>
+      )}
     </div>
   );
 }

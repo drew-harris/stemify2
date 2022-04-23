@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { DebounceInput } from "react-debounce-input";
-import { PropagateLoader } from "react-spinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faSmog } from "@fortawesome/free-solid-svg-icons";
-import { getSession, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import Head from "next/head";
 import BigSong from "../Songs/BigSong";
@@ -27,11 +24,7 @@ export default function Status({ song, queuePosition, submitAnother }: any) {
       <div className="text-xl font-semibold text-center">STATUS</div>
       <div className="flex flex-col items-center gap-4 p-4 text-center sm:p-9 PAGE">
         <StatusSong songData={song} width="auto" />
-        {!song.complete ? (
-          "You are in queue position " + queuePosition
-        ) : (
-          <button onClick={submitAnother}>Submit Another</button>
-        )}
+        <div>{"You are in queue position " + queuePosition}</div>
       </div>
     </div>
   );
