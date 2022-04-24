@@ -244,6 +244,7 @@ function makeSongFromSpotify(track: any) {
     popularity: track.popularity,
     trackNum: track.track_number,
     previewUrl: track.preview_url || null,
+    explicit: track.explicit,
     bpm: null,
   };
   return betterOutput;

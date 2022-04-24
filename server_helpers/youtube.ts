@@ -7,7 +7,7 @@ export async function getInfo(url: string, limit: number = 1) {
   }
 
   const info = await (await ytdl.getInfo(url)).videoDetails;
-  let songs = [];
+  let songs: any[] = [];
   if (info?.media?.song) {
     const queryTitle = info.media.song;
     const queryArtist = info.media.artist || "";
@@ -27,6 +27,20 @@ export async function getInfo(url: string, limit: number = 1) {
       false,
       limit
     );
+
+    // Filter out the non explict songs if there is a matching explicit song
+    if (songs.length > 2) {
+      for (let i = 0; i < songs.length; i++) {
+        if (!songs[i].explicit) {
+          for (let j = 0; j < songs.length; j++) {
+            if (songs[j].explicit && songs[j].title == songs[i].title) {
+              songs = songs.filter((song) => song.id !== songs[i].id);
+              break;
+            }
+          }
+        }
+      }
+    }
   }
   return songs;
 }
