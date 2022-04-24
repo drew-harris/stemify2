@@ -28,8 +28,10 @@ export async function getInfo(url: string, limit: number = 1) {
       limit
     );
 
+    console.log(songs);
+
     // Filter out the non explict songs if there is a matching explicit song
-    if (songs.length > 2) {
+    if (songs.length > 1) {
       for (let i = 0; i < songs.length; i++) {
         if (!songs[i].explicit) {
           for (let j = 0; j < songs.length; j++) {
