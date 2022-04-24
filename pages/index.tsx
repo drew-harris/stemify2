@@ -35,6 +35,12 @@ const Home: NextPage = () => {
             QUEUE
           </a>
         </Link>
+        <a
+          className="text-xl font-bold underline text-neutral-800 sm:mb-0"
+          href="https://www.buymeacoffee.com/stemify"
+        >
+          DONATE
+        </a>
 
         {session?.user?.level > 0 && (
           <Link href="/admin">
@@ -58,9 +64,6 @@ const Home: NextPage = () => {
             SIGN IN
           </button>
         )}
-      </div>
-      <div className="fixed underline bottom-2 left-2">
-        <a href="https://www.buymeacoffee.com/stemify">Donate</a>
       </div>
     </>
   );
