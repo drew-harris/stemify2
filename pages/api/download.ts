@@ -27,6 +27,18 @@ export default async function handler(
       },
     });
 
+    // increment downloads field
+    await client.song.update({
+      where: {
+        id: id,
+      },
+      data: {
+        downloads: {
+          increment: 1,
+        },
+      },
+    });
+
     if (!download) {
       res.status(404).json({ error: "download not found" });
     }

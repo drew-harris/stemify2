@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { DebounceInput } from "react-debounce-input";
 import { PropagateLoader } from "react-spinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faHouse } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import BigSong from "../../components/Songs/BigSong";
@@ -15,11 +15,20 @@ import Head from "next/head";
 export default function New({ onSubmitted }: any) {
   const [inputLink, setInputLink] = useState("");
   const [choices, setChoices] = useState([]);
+  const [choiceIndex, setChoiceIndex] = useState(0);
   const [choicesLoading, setChoicesLoading] = useState(false);
 
   const [colors, setColors] = useState(["#FF0000", "#0000FF"]);
 
   const inputEl: any = useRef(null);
+
+  const cycleChoiceInput = () => {
+    if (choiceIndex === choices.length - 1) {
+      setChoiceIndex(0);
+    } else {
+      setChoiceIndex(choiceIndex + 1);
+    }
+  };
 
   const getChoices = async (url: string) => {
     try {
@@ -30,7 +39,7 @@ export default function New({ onSubmitted }: any) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url: url, limit: 1 }),
+        body: JSON.stringify({ url: url, limit: 4 }),
       });
       const data = await response.json();
       console.log(data);
@@ -43,7 +52,7 @@ export default function New({ onSubmitted }: any) {
 
   const submit = async () => {
     try {
-      const song: any = choices[0];
+      const song: any = choices[choiceIndex];
 
       song.innerColor = colors[0];
       song.outerColor = colors[1];
@@ -117,16 +126,18 @@ export default function New({ onSubmitted }: any) {
             </div>
           )}
           {choices.length > 0 ? (
-            <div className="flex flex-row items-center justify-center gap-4 pt-8 mx-auto mb-10">
-              {choices.map((choice: any) => (
+            <>
+              <div className="flex flex-col items-center justify-center gap-3 pt-8 mx-auto mb-10 ">
                 <BigSong
-                  songData={choice}
+                  songData={choices[choiceIndex]}
                   setColors={setColors}
                   width="auto"
-                  key={choice.id}
                 />
-              ))}
-            </div>
+                <div className="cursor-pointer" onClick={cycleChoiceInput}>
+                  <FontAwesomeIcon icon={faArrowsRotate} />
+                </div>
+              </div>
+            </>
           ) : null}
 
           {choices.length > 0 ? (
