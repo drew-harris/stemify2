@@ -4,17 +4,6 @@ import config from "../config";
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   // Before march 7th
-  //
-  if (
-    Date.now() < config.releaseDate &&
-    !req.url.includes("/storage") &&
-    !req.url.includes("/api")
-  ) {
-    console.log(req.url);
 
-    const url = req.nextUrl.clone();
-    url.pathname = "/closed";
-    return NextResponse.rewrite(url);
-  }
   return NextResponse.next();
 }

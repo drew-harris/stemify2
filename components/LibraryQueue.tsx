@@ -26,7 +26,8 @@ async function getDownload(data: any) {
 }
 
 export default function LibraryQueue(props: any) {
-  const { queueSongs, isUploading, setIsUploading } = useContext(queueContext);
+  const { setQueueSongs, queueSongs, isUploading, setIsUploading } =
+    useContext(queueContext);
   const songElements = queueSongs.map((song: any) => (
     <QueueSong data={song} key={song.id} />
   ));
@@ -40,6 +41,12 @@ export default function LibraryQueue(props: any) {
     }
     init();
   }, []);
+
+  function cancel() {
+    setIsUploading(false);
+    setQueueSongs([]);
+    sdk.cancel();
+  }
 
   async function uploadOne(data: any) {
     setSongMessage("Downloading");
@@ -64,6 +71,7 @@ export default function LibraryQueue(props: any) {
           setSongMessage(Math.round(uploadInfo.total * 100) + "%");
         }
       });
+
       return 1;
     } catch (error) {
       console.error(error);
@@ -85,6 +93,7 @@ export default function LibraryQueue(props: any) {
         console.error(error);
       } finally {
         queueSongs.shift();
+        setQueueSongs(queueSongs);
       }
 
       // Remove first element
@@ -100,7 +109,14 @@ export default function LibraryQueue(props: any) {
       <div className="flex flex-col gap-1 m-2 overflow-auto rounded grow ">
         {songElements}
       </div>
-      <div>{songMessage}</div>
+      {isUploading ? (
+        <div className="flex justify-between display">
+          <div>{songMessage}</div>
+          <div className="cursor-pointer" onClick={cancel}>
+            Cancel
+          </div>
+        </div>
+      ) : null}
       {queueSongs.length > 0 ? (
         <button
           onClick={uploadAll}

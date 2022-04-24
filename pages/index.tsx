@@ -21,24 +21,24 @@ const Home: NextPage = () => {
       </div>
       <div className="flex flex-col items-center justify-center gap-4 pt-8 mx-auto mb-10">
         <Link href="/submit">
-          <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
+          <a className="text-xl font-bold underline text-neutral-800 sm:mb-0">
             SUBMIT
           </a>
         </Link>
         <Link href="/library">
-          <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
+          <a className="text-xl font-bold underline text-neutral-800 sm:mb-0">
             LIBRARY
           </a>
         </Link>
         <Link href="/queue">
-          <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
+          <a className="text-xl font-bold underline text-neutral-800 sm:mb-0">
             QUEUE
           </a>
         </Link>
 
         {session?.user?.level > 0 && (
           <Link href="/admin">
-            <a className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0">
+            <a className="text-xl font-bold underline text-neutral-800 sm:mb-0">
               ADMIN
             </a>
           </Link>
@@ -46,18 +46,21 @@ const Home: NextPage = () => {
         {session?.user ? (
           <button
             onClick={() => signOut()}
-            className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0"
+            className="text-xl font-bold underline text-neutral-800 sm:mb-0"
           >
             SIGN OUT
           </button>
         ) : (
           <button
             onClick={() => signIn("discord")}
-            className="mb-8 text-xl font-bold underline text-neutral-800 sm:mb-0"
+            className="text-xl font-bold underline text-neutral-800 sm:mb-0"
           >
             SIGN IN
           </button>
         )}
+      </div>
+      <div className="fixed underline bottom-2 left-2">
+        <a href="https://www.buymeacoffee.com/stemify">Buy Me A Coffee</a>
       </div>
     </>
   );

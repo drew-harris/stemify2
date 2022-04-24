@@ -74,7 +74,15 @@ export async function createSong(
       approved: false,
       complete: false,
     },
-    include: {
+    select: {
+      album: true,
+      artist: true,
+      id: true,
+      title: true,
+      complete: true,
+      previewUrl: true,
+      submittedAt: true,
+
       ticket: {
         select: {
           id: true,
@@ -102,5 +110,5 @@ export async function createSong(
       },
     });
   }
-  return { song };
+  return song;
 }

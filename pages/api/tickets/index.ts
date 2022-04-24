@@ -6,6 +6,7 @@ import { getPrismaPool } from "../../../server_helpers/prismaPool";
 import { fillInArtistAndAlbum } from "../../../server_helpers/spotify";
 import { getSession } from "next-auth/react";
 import { createSong } from "../../../server_helpers/tickets";
+import Song from "../../../components/Songs/Song";
 
 export default async function handler(
   req: NextApiRequest,
@@ -51,7 +52,20 @@ export default async function handler(
       // TODO: Change null to user
       const created = await createSong(url, data, false, session.user);
 
-      res.json(created);
+      const client = await getPrismaPool();
+      const queuePos: number = await client.song.count({
+        where: {
+          complete: false,
+          submittedAt: {
+            lt: created.submittedAt,
+          },
+        },
+      });
+
+      res.json({
+        song: created,
+        queuePosition: queuePos,
+      });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
