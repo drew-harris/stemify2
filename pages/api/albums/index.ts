@@ -59,14 +59,7 @@ export default async function handler(
           },
         },
       });
-
-      // Filter albums with less than 5 songs
-
-      const filteredSongs = songs.filter((album) => {
-        return album.songs.length >= 5;
-      });
-
-      res.status(200).json(filteredSongs);
+      res.json(songs);
     } catch (error) {
       console.error(error);
       res.status(500).json({ msg: "Internal server error" });
