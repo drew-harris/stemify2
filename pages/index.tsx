@@ -60,7 +60,7 @@ const Home: NextPage = () => {
         )}
       </div>
       <div className="fixed underline bottom-2 left-2">
-        <a href="https://www.buymeacoffee.com/stemify">Buy Me A Coffee</a>
+        <a href="https://www.buymeacoffee.com/stemify">Donate</a>
       </div>
     </>
   );
