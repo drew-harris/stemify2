@@ -4,5 +4,6 @@ import config from "../config";
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   // Before march 7th
+
   return NextResponse.next();
 }
