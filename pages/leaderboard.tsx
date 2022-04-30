@@ -1,3 +1,4 @@
+import Head from "next/head";
 import HomeButton from "../components/HomeButton";
 import { getPrismaPool } from "../server_helpers/prismaPool";
 
@@ -21,6 +22,9 @@ export default function Leaderboard({ average, total }: any) {
 
   return (
     <>
+      <Head>
+        <title>Leaderboard</title>
+      </Head>
       <HomeButton />
       <div className="mb-6 text-xl font-bold text-center">Leaderboards</div>
       <div className="flex flex-col items-center justify-around sm:flex-row">
