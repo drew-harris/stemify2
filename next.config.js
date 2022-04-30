@@ -10,7 +10,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["i.scdn.co"],
+    domains: ["i.scdn.co", "i.imgur.com"],
   },
 };
 

@@ -19,6 +19,11 @@ export default function AdminIndex() {
             PLAYLIST UPLOAD
           </a>
         </Link>
+        <Link href="/admin/endless">
+          <a className="block mb-8 text-xl font-bold text-center underline sm:mb-0">
+            ENDLESS
+          </a>
+        </Link>
       </div>
     </>
   );

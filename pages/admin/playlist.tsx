@@ -167,6 +167,7 @@ export default function AdminIndex() {
 export async function getServerSideProps(context: any) {
   const session: any = await getSession(context);
   console.log(session);
+  // Level 1 required to use this page
   if (!session || session.user.level < 1) {
     context.res.writeHead(302, { Location: "/" });
     context.res.end();
