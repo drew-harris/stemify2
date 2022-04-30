@@ -11,6 +11,7 @@ export function Album({ album, embedded = false }: any) {
     };
     return <WideSong showTrackNumber={true} data={song} key={song.id} />;
   });
+
   useEffect(() => {
     console.log(album);
   }, [album]);
@@ -73,9 +74,12 @@ export function Album({ album, embedded = false }: any) {
               <div />
             )}
           </div>
-          <button className="hidden h-[0%] p-1 px-2 font-semibold text-white transition-transform rounded-md shrink-1 bg-tan-400 sm:block hover:shadow-md hover:scale-105">
+          {/* <button
+            onClick={addAll}
+            className="hidden h-[0%] p-1 px-2 font-semibold text-white transition-transform rounded-md shrink-1 bg-tan-400 sm:block hover:shadow-md hover:scale-105"
+          >
             ADD ALL
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="mt-4 bg-white rounded-md">{songComponents}</div>
