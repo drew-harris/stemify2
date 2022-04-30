@@ -83,7 +83,7 @@ export async function getStaticProps({ params }: any) {
     props: {
       album,
     },
-    revalidate: 100000,
+    revalidate: 10,
   };
 }
 
