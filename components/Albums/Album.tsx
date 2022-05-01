@@ -1,16 +1,37 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { queueContext } from "../layouts/LibraryLayout";
 import WideSong from "../Songs/WideSong";
 
 export function Album({ album, embedded = false }: any) {
   const songs = album?.songs;
+
+  const { queueSongs, setQueueSongs, isUploading } = useContext(queueContext);
+
   const songComponents = songs?.map((song: any) => {
     song.album = {
       image: album.image,
     };
     return <WideSong showTrackNumber={true} data={song} key={song.id} />;
   });
+
+  // Add every song with a settimeout
+  const addAll = () => {
+    if (!isUploading) {
+      let i = 0;
+      let currentQueue = queueSongs;
+      for (const song of songs) {
+        setTimeout(() => {
+          if (currentQueue.includes(song) === false) {
+            setQueueSongs([...currentQueue, song]);
+            currentQueue = [...currentQueue, song];
+          }
+        }, i * 25);
+        i++;
+      }
+    }
+  };
 
   useEffect(() => {
     console.log(album);
@@ -74,12 +95,12 @@ export function Album({ album, embedded = false }: any) {
               <div />
             )}
           </div>
-          {/* <button
+          <button
             onClick={addAll}
             className="hidden h-[0%] p-1 px-2 font-semibold text-white transition-transform rounded-md shrink-1 bg-tan-400 sm:block hover:shadow-md hover:scale-105"
           >
             ADD ALL
-          </button> */}
+          </button>
         </div>
       </div>
       <div className="mt-4 bg-white rounded-md">{songComponents}</div>
