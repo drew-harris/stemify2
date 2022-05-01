@@ -78,7 +78,7 @@ export default function BiggestSong({ songData }: any) {
       className={` items-center justify-between p-6 overflow-hidden text-sm sm:text-lg text-center sm:text-left transition-shadow bg-white shadow-sm  text-tan-700 rounded-xl hover:shadow-md`}
     >
       <div className="flex flex-row items-center ">
-        <div className="relative mr-4 overflow-hidden rounded-lg w-14 h-14 sm:w-28 sm:h-28 shrink-0 md:mr-4">
+        <div className="relative mr-4 overflow-hidden rounded-lg w-14 h-14 sm:w-36 sm:h-36 shrink-0 md:mr-4">
           <Link passHref={true} href={`/library/album/${songData.album.id}`}>
             <Image
               quality={80}
@@ -93,6 +93,7 @@ export default function BiggestSong({ songData }: any) {
           <div className="font-semibold">{songData.title}</div>
           <div className="font-medium">{songData.artist.name}</div>
           <div className="font-normal ">{songData.album.title}</div>
+          Submitted by: {songData.user.name}
           <div className="flex justify-center gap-4 mt-2 sm:justify-start">
             <div
               className="w-4 h-4 rounded-full"

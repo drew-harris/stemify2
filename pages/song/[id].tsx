@@ -29,6 +29,11 @@ export async function getStaticProps({ req, res, params }: any) {
     include: {
       artist: true,
       album: true,
+      user: {
+        select: {
+          name: true,
+        },
+      },
     },
   });
   console.log(song);
