@@ -35,11 +35,6 @@ const Home: NextPage = () => {
             QUEUE
           </a>
         </Link>
-        <Link href="/leaderboard">
-          <a className="text-xl font-bold underline text-neutral-800 sm:mb-0">
-            LEADERBOARD
-          </a>
-        </Link>
         <a
           className="text-xl font-bold underline text-neutral-800 sm:mb-0"
           href="https://www.buymeacoffee.com/stemify"
