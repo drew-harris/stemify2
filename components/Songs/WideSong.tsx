@@ -18,6 +18,7 @@ export default function WideSong({ data, showTrackNumber = false }: any) {
       setQueueSongs(queueSongs.filter((song: any) => song.id !== data.id));
     }
   };
+
   return (
     <div className="flex flex-row items-center justify-between p-2 pl-4 overflow-hidden transition-shadow border-b shadow-sm shadow- border-tan-300 sm:4 hover:shadow-md">
       <div className="flex items-baseline gap-4">

@@ -49,7 +49,6 @@ export default async function handler(
 
       data = await fillInArtistAndAlbum(data);
 
-      // TODO: Change null to user
       const created = await createSong(url, data, false, session.user);
 
       const client = await getPrismaPool();

@@ -21,7 +21,7 @@ export default function QueuePage({ songs }: any) {
   );
 }
 
-export async function getStaticProps({ req, res }: any) {
+export async function getServerSideProps({ req, res }: any) {
   const prisma = await getPrismaPool();
   let songs = await prisma.song.findMany({
     where: {
@@ -41,6 +41,5 @@ export async function getStaticProps({ req, res }: any) {
     props: {
       songs,
     },
-    revalidate: 10,
   };
 }

@@ -11,7 +11,8 @@ export const getToken = async () => {
   }
   const result = await prisma.spotify.findFirst();
   if (!result || !result.token || !result.expires) {
-    throw new Error("No token found");
+    _token = await getNewToken();
+    return _token;
   }
   if (result.expires.getTime() < Date.now()) {
     _token = await getNewToken();

@@ -1,16 +1,17 @@
-import { ReactElement, useEffect, useRef, useState } from "react";
-import LibraryLayout from "../../components/layouts/LibraryLayout";
 import Head from "next/head";
-import SongContainer from "../../components/LibraryContainers/SongContainer";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { PropagateLoader } from "react-spinners";
+import LibraryLayout from "../../components/layouts/LibraryLayout";
+import SongContainer from "../../components/LibraryContainers/SongContainer";
 
-import { getPrismaPool } from "../../server_helpers/prismaPool";
-import PageSwitcher from "../../components/PageSwitcher";
-import LibraryQueryControls from "../../components/LibraryQueryControls";
+import { InferGetStaticPropsType } from "next";
 import AlbumContainer from "../../components/Albums/AlbumContainer";
 import ArtistContainer from "../../components/LibraryContainers/ArtistContainer";
+import LibraryQueryControls from "../../components/LibraryQueryControls";
+import PageSwitcher from "../../components/PageSwitcher";
+import { getPrismaPool } from "../../server_helpers/prismaPool";
 
-function Home({ initialData }: any) {
+function Home({ initialData }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [data, setData] = useState(initialData);
   const [fetching, setFetching] = useState(false);
   const [updateCount, setUpdateCount] = useState(0);
