@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const { withSuperjson } = require("next-superjson");
+const nextConfig = withSuperjson()({
   reactStrictMode: true,
   async rewrites() {
     return [
@@ -12,6 +13,6 @@ const nextConfig = {
   images: {
     domains: ["i.scdn.co", "i.imgur.com"],
   },
-};
+});
 
 module.exports = nextConfig;
